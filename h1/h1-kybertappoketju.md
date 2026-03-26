@@ -550,6 +550,9 @@ Huomasin, että python ei automattiisesti aja pääkäyttäjänä ja vaihdettuan
 
 <img width="835" height="227" alt="image" src="https://github.com/user-attachments/assets/596c8531-5350-4372-ac78-6c0650a9e4ce" />
 
+<img width="1377" height="583" alt="image" src="https://github.com/user-attachments/assets/0ba1f946-8425-419b-9d75-c88012bcd09e" />
+
+
 ## Lähteet
 
 https://nmap.org/book/man-performance.html
