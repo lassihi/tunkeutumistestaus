@@ -42,5 +42,16 @@ sudo nmap -T4 -A localhost
 
 ## e) Ratkaise vapaavalintainen kone HackTheBoxista. Omalle tasolle sopiva, useimmille varmaan Starting Pointista. Valitse kone, jota et ole ratkaissut vielä. Ei tunnilla näytetty Meow. (Propellihatuille: jos teet vaikeampia ei-starting-point koneita, niin retired tai vastaava kone, josta saa julkaista writeupin).
 
+Tein HackTheBoxin Cap-koneen, sillä se nopealla vilkaisulla näytti olevan suosituin retired kategoriasta. Koneen kuvauksessa kerrotaan HTTP-palvelimessa olevan IDOR-haavoittuvuus, joka mahdollistaa tunnusten löytämisen, joilla päästään linux koneen rootiksi. (https://app.hackthebox.com/machines/Cap)
 
+Latasin ensiksi koneeseen liitetyn VPN konfiguraation, jonka jälkeen yhdistin VPN palvelimeen suoraan NetworkManagerin kautta.
+
+*Kysymys 1: How many TCP ports are open?*
+
+Porttiskannasin kohdekoneen, `sudo nmap `
+
+Nmap näyttää, että avoimia portteja on 3.
+
+
+## Lähteet
 https://nmap.org/book/man-performance.html
