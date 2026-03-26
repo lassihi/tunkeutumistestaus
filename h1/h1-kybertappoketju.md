@@ -24,9 +24,11 @@ Tehtävänanto: https://terokarvinen.com/palvelinten-hallinta/#h1-viisikko
 
 ## a) Asenna Kali virtuaalikoneeseen. (Jos asennuksessa ei ole mitään ongelmia tai olet asentanut jo aiemmin, tarkkaa raporttia tästä alakohdasta ei tarvita).
 
-Asennus onnistui hyvin 
+Minulta löytyi ylimääräinen kannettava, joka on vain tällä kurssilla käytössä, joten asensin Kalin suoraan tämän raudalle. Asennuskuvana toimi [kali-linux-2026.1-installer-amd64.iso](https://cdimage.kali.org/kali-2026.1/kali-linux-2026.1-installer-amd64.iso). Asennuksen kanssa ei ollut minkäänlaisia ongelmia.
 
 ## b) Irrota Kali-virtuaalikone verkosta. Todista testein, että kone ei saa yhteyttä Internetiin (esim. 'ping 8.8.8.8')
+
+
 
 ## c) Porttiskannaa 1000 tavallisinta tcp-porttia omasta koneestasi (nmap -T4 -A localhost). Selitä komennon paramterit. Analysoi ja selitä tulokset.
 Ajoin annetun komennon pääkäyttäjänä, jotta porttiskannaus toimisi optimaalisesti
@@ -50,7 +52,7 @@ Latasin ensiksi koneeseen liitetyn VPN konfiguraation, jonka jälkeen yhdistin V
 
 Porttiskannasin kohdekoneen, `sudo nmap `
 
-Nmap näyttää, että avoimia portteja on 3.
+Nmap näytti, että avoimia portteja on 3, joka kelpasi HackTheBoxille oikeaksi vastaukseksi.
 
 
 ## Lähteet
