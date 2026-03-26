@@ -29,7 +29,18 @@ Asennus onnistui hyvin
 ## b) Irrota Kali-virtuaalikone verkosta. Todista testein, että kone ei saa yhteyttä Internetiin (esim. 'ping 8.8.8.8')
 
 ## c) Porttiskannaa 1000 tavallisinta tcp-porttia omasta koneestasi (nmap -T4 -A localhost). Selitä komennon paramterit. Analysoi ja selitä tulokset.
+Ajoin annetun komennon pääkäyttäjänä, jotta porttiskannaus toimisi optimaalisesti
+```
+sudo nmap -T4 -A localhost
+```
+* `sudo nmap`: nmap-ohjelman ajaminen pääkäyttäjänä
+* `-T4`: käytetään agressiivista ajoitusta, nopeuttaa skannauksen ajoa
+* `-A`: käyttöjärjestelmän tunnistus, versioiden tunnistus, skriptien käyttö ja traceroute
+* `localhost`: skannauksen kohdeosoite
 
 ## d) Asenna kaksi vapaavalintaista demonia ja skannaa uudelleen. Analysoi ja selitä erot.
 
 ## e) Ratkaise vapaavalintainen kone HackTheBoxista. Omalle tasolle sopiva, useimmille varmaan Starting Pointista. Valitse kone, jota et ole ratkaissut vielä. Ei tunnilla näytetty Meow. (Propellihatuille: jos teet vaikeampia ei-starting-point koneita, niin retired tai vastaava kone, josta saa julkaista writeupin).
+
+
+https://nmap.org/book/man-performance.html
