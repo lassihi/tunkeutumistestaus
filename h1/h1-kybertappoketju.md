@@ -159,7 +159,7 @@ Sivusto avautui.
 
 Koneen infossa mainittiin sivulla olevan Insecure direct object reference -haavoittuvuus, eli pääsynhallintaan liittyvä haavoittuvuus, jota tyypillisesti hyödynnetään URL-osoitteen ja siihen liitettyjen parametrien kautta. (https://portswigger.net/web-security/access-control/idor)
 
-Sivustolla Security Snapshotin luominen vei osoitteeseen `/data/1`, jossa snapshotin id löytyy polun päätteestä. Kokeilin muutamia erilaisia id:tä, joista 0 löytyi. 
+Sivustolla Security Snapshotin luominen vei osoitteeseen `/data/1`, jossa snapshotin id löytyy polun päätteestä. Kokeilin muutamia erilaisia id:tä, joista 0 löytyi. Esimmäisen tekemäni snapshotin id oli 1, toisen 2..., joten kyseessä oli jonkun toisen tekemä snapshot.
 
 <img width="1844" height="786" alt="image" src="https://github.com/user-attachments/assets/a9d63dce-0ddd-4866-8841-6bf47ceaf5e6" />
 
