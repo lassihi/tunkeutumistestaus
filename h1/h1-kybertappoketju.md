@@ -143,6 +143,8 @@ $ curl http://10.129.17.241/capture
 <h1>Redirecting...</h1>
 <p>You should be redirected automatically to target URL: <a href="/data/1">/data/1</a>. If not click the link.   
 ```
+Vastaus löytyi redirect-linkistä.
+
 <img width="944" height="203" alt="image" src="https://github.com/user-attachments/assets/6b63449b-3f43-4723-b9b4-07d1bf94c38e" />
 
 ### *Task 3: Are you able to get to other user's scans?*
