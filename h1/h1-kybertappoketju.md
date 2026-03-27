@@ -40,7 +40,23 @@ sudo nmap -T4 -A localhost
 * `-A`: käyttöjärjestelmän tunnistus, versioiden tunnistus, skriptien käyttö ja traceroute
 * `localhost`: skannauksen kohdeosoite
 
+<img width="828" height="236" alt="image" src="https://github.com/user-attachments/assets/9b91ba64-456a-4ed0-a5f7-38b0b4242b36" />
+
+Koneella ei ole avoimia TCP-portteja, sillä asennus on uusi, eikä siinä ole oletuksena käynnissä palveluita.
+
 ## d) Asenna kaksi vapaavalintaista demonia ja skannaa uudelleen. Analysoi ja selitä erot.
+
+Asensin ja käynnistin apachen ja sshd:n.
+```
+sudo apt-get install apache2 openssh-server 
+sudo systemctl start apache2 ssh
+```
+
+Ajoin skannauksen uudestaan.
+
+<img width="828" height="338" alt="image" src="https://github.com/user-attachments/assets/d601ddb4-c973-4d20-ba98-0bb932b8f492" />
+
+Tällä kertaa nmap löysi portissa 22 olevan ssh-palvelimen ja 80 olevan http-palvelimen, sekä tunnisti niitä pyörittävät demonit ja niiden versiot. Näiden lisäksi tunnistettiin taustalla olevan Linux käyttöjärjestelmä.
 
 ## e) Ratkaise vapaavalintainen kone HackTheBoxista. Omalle tasolle sopiva, useimmille varmaan Starting Pointista. Valitse kone, jota et ole ratkaissut vielä. Ei tunnilla näytetty Meow. (Propellihatuille: jos teet vaikeampia ei-starting-point koneita, niin retired tai vastaava kone, josta saa julkaista writeupin).
 
@@ -48,7 +64,7 @@ Tein HackTheBoxin Cap-koneen, sillä se nopealla vilkaisulla näytti olevan suos
 
 Latasin ensiksi koneeseen liitetyn VPN konfiguraation, jonka jälkeen yhdistin VPN palvelimeen suoraan NetworkManagerin kautta.
 
-*Task 1: How many TCP ports are open?*
+### *Task 1: How many TCP ports are open?*
 
 Porttiskannasin kohdekoneen, `sudo nmap 10.129.17.241`
 
@@ -58,7 +74,7 @@ Nmap näytti, että avoimia portteja on 3, joka kelpasi HackTheBoxille oikeaksi 
 
 <img width="949" height="190" alt="image" src="https://github.com/user-attachments/assets/8c4804d9-057d-4b75-969b-0f98945fe7e2" />
 
-*Task 2: After running a "Security Snapshot", the browser is redirected to a path of the format /[something]/[id], where [id] represents the id number of the scan. What is the [something]?*
+### *Task 2: After running a "Security Snapshot", the browser is redirected to a path of the format /[something]/[id], where [id] represents the id number of the scan. What is the [something]?*
 
 Yritin yhdistää selaimella skannauksesta löytyneeseen HTTP-palvelimeen 10.129.17.241:80, mutta sivusto ei auennut, sillä se ei saanut ladattua fontteja, sekä javascript ohjelmia CDN-palvelimilta (VPN salli yhteydet vain kohdeverkkoon). Testasin, jos curl saisi yhteyden sivustoon.
 
@@ -464,7 +480,7 @@ $ curl http://10.129.17.241/capture
 ```
 <img width="944" height="203" alt="image" src="https://github.com/user-attachments/assets/6b63449b-3f43-4723-b9b4-07d1bf94c38e" />
 
-*Task 3: Are you able to get to other user's scans?*
+### *Task 3: Are you able to get to other user's scans?*
 
 Otin tässä kohtaa openvpn:n käyttöön, jotta sivuston saa myös selaimella auki.
 
@@ -484,7 +500,7 @@ En ollut itse luonut kyseistä snapshotia, joten valitsin vastaukseksi "yes".
 
 <img width="1370" height="189" alt="image" src="https://github.com/user-attachments/assets/b3bcd6f3-9214-4a47-bab6-e4b1fbb3cc56" />
 
-*Task 4: What is the ID of the PCAP file that contains sensitive data?*
+### *Task 4: What is the ID of the PCAP file that contains sensitive data?*
 
 Latasin snapshotin 0 pcap-tiedoston sivun download-napista ja avasin sen Wiresharkilla.
 
@@ -496,7 +512,7 @@ Kyseinen tiedosto siis sisältää herkkää dataa.
 
 <img width="1360" height="193" alt="image" src="https://github.com/user-attachments/assets/9a3fb8c5-d5e1-470e-a90b-93cb39be7972" />
 
-*Task 5: Which application layer protocol in the pcap file can the sensetive data be found in?*
+### *Task 5: Which application layer protocol in the pcap file can the sensetive data be found in?*
 
 Tiedostosta nähtiin, että salasana sijaitsee FTP-protokollassa.
 
@@ -516,7 +532,7 @@ user.txt-tiedostosta löytyi toinen koneen kahdesta lipusta.
 
 <img width="1367" height="176" alt="image" src="https://github.com/user-attachments/assets/4c87e917-98d9-47a5-9482-8111f14fe019" />
 
-*Task 6: We've managed to collect nathan's FTP password. On what other service does this password work?*
+### *Task 6: We've managed to collect nathan's FTP password. On what other service does this password work?*
 
 Porttiskannauksen tuloksena tiedetään, että HTTP ja FTP palveluiden lisäksi koneella on SSH. Tutkin pääseekö samalla salanalla sisään SSH:n kautta.
 
@@ -526,7 +542,7 @@ Salasana Buck3tH4TF0RM3! toimi myös SSH:n.
 
 <img width="1365" height="194" alt="image" src="https://github.com/user-attachments/assets/6a0c85fe-d7df-4cc6-a545-b9cc0e6e9945" />
 
-*Task 8: What is the full path to the binary on this machine has special capabilities that can be abused to obtain root privileges?*
+### *Task 8: What is the full path to the binary on this machine has special capabilities that can be abused to obtain root privileges?*
 
 Käyttäjällä ei ole sudo oikeuksia ja rootilla on eri salasana.
 
@@ -550,8 +566,11 @@ Huomasin, että python ei automattiisesti aja pääkäyttäjänä ja vaihdettuan
 
 <img width="835" height="227" alt="image" src="https://github.com/user-attachments/assets/596c8531-5350-4372-ac78-6c0650a9e4ce" />
 
+Kun pythonin sai siirrettyä rootiksi, lipun sai tulostettua `/root`-hakemistosta read()-metodilla.
+
 <img width="1377" height="583" alt="image" src="https://github.com/user-attachments/assets/0ba1f946-8425-419b-9d75-c88012bcd09e" />
 
+Task 8 ei hyväksynyt minkään käyttämäni binäärin polkua vastaukseksi, joten ilmeisesti oletettu ratkaisu olisi hyödyntänyt jotain muuta haavoittuvuutta koneessa. Tärkeintä kuitenkin on, että liput löytyivät.
 
 ## Lähteet
 
