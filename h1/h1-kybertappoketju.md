@@ -16,6 +16,13 @@ Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
 * Kybertappoketjun vaiheet: Reconnaisance, Weaponization, Delivery, Exploitation, Installation, Command and Control, Actions on Objectives
 
 **Santos et al: The Art of Hacking (Video Collection): 4.3 Surveying Essential Tools for Active Reconnaissance**
+* Passiivisen tiedustelun jälkeen suoritetaan aktiivinen tiedustelu, jossa mm. varmistetaan passiivisessa tiedustelussa havaittuja asioita ja skannataan haavoittuvuuksia
+* Tiedusteluvaiheessa on oltava huolellinen, jotta hyökkäys voidaan suorittaa tehokkaasti
+* Porttiskannauksen työkalut:
+  * Nmap: Monipuolinen ja stabiili porttiskanneri
+  * Masscan: Nopea porttiskanneri
+  * Udpprotoscanner: Nopea UDP porttiskanneri
+* Verkko- ja Web-haavoittuvuuksine skannaukseen löytyy myös useita työkaluja 
 
 **KKO 2003:36**
 * 19.11.1998 nuoren atk-harrastajan porttiskannaus osunut Osuuspankkikeskus-OPK osuuskunnan tietojärjestelmään
