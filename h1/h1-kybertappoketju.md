@@ -27,7 +27,13 @@ Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
 Minulta löytyi ylimääräinen kannettava, joka on vain tällä kurssilla käytössä, joten asensin Kalin suoraan tämän raudalle. Asennuskuvana toimi [kali-linux-2026.1-installer-amd64.iso](https://cdimage.kali.org/kali-2026.1/kali-linux-2026.1-installer-amd64.iso). Asennuksen kanssa ei ollut minkäänlaisia ongelmia.
 
 ## b) Irrota Kali-virtuaalikone verkosta. Todista testein, että kone ei saa yhteyttä Internetiin (esim. 'ping 8.8.8.8')
+Kone yhdistettynä wifiin.
 
+<img width="512" height="189" alt="image" src="https://github.com/user-attachments/assets/a182f477-21c4-4456-b8d8-ca183ccce304" />
+
+Oikeasta yläkulmasta networkmanager valikosta "Disconnect".
+
+<img width="370" height="59" alt="image" src="https://github.com/user-attachments/assets/4f58e294-d1ab-4a16-8aaa-83bc441ac266" />
 
 ## c) Porttiskannaa 1000 tavallisinta tcp-porttia omasta koneestasi (nmap -T4 -A localhost). Selitä komennon paramterit. Analysoi ja selitä tulokset.
 Ajoin annetun komennon pääkäyttäjänä, jotta porttiskannaus toimisi optimaalisesti
