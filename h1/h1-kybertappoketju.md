@@ -34,13 +34,15 @@ Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
 Minulta löytyi ylimääräinen kannettava, joka on vain tällä kurssilla käytössä, joten asensin Kalin suoraan tämän raudalle. Asennuskuvana toimi [kali-linux-2026.1-installer-amd64.iso](https://cdimage.kali.org/kali-2026.1/kali-linux-2026.1-installer-amd64.iso). Asennuksen kanssa ei ollut minkäänlaisia ongelmia.
 
 ## b) Irrota Kali-virtuaalikone verkosta. Todista testein, että kone ei saa yhteyttä Internetiin (esim. 'ping 8.8.8.8')
-Kone yhdistettynä wifiin.
+Ping koneen ollessa yhdistettynä verkkoon:
 
 <img width="512" height="189" alt="image" src="https://github.com/user-attachments/assets/a182f477-21c4-4456-b8d8-ca183ccce304" />
 
-Oikeasta yläkulmasta networkmanager valikosta "Disconnect".
+Ping, kun yhteys verkkoon katkaistu oikeasta yläkulmasta Network Manager valikosta ja "Disconnect".
 
 <img width="370" height="59" alt="image" src="https://github.com/user-attachments/assets/4f58e294-d1ab-4a16-8aaa-83bc441ac266" />
+
+Ping ilmoitta, että se ei saa yhteyttä verkkoon.
 
 ## c) Porttiskannaa 1000 tavallisinta tcp-porttia omasta koneestasi (nmap -T4 -A localhost). Selitä komennon paramterit. Analysoi ja selitä tulokset.
 Ajoin annetun komennon pääkäyttäjänä, jotta porttiskannaus toimisi optimaalisesti
@@ -54,7 +56,7 @@ sudo nmap -T4 -A localhost
 
 <img width="828" height="236" alt="image" src="https://github.com/user-attachments/assets/9b91ba64-456a-4ed0-a5f7-38b0b4242b36" />
 
-Koneella ei ole avoimia TCP-portteja, sillä asennus on uusi, eikä siinä ole oletuksena käynnissä palveluita.
+Koneella ei ole avoimia TCP-portteja, sillä asennus on uusi, eikä siinä ole oletuksena käynnissä palveluita, jotka avaisivat portin.
 
 ## d) Asenna kaksi vapaavalintaista demonia ja skannaa uudelleen. Analysoi ja selitä erot.
 
@@ -88,7 +90,7 @@ Nmap näytti, että avoimia portteja on 3, joka kelpasi HackTheBoxille oikeaksi 
 
 ### *Task 2: After running a "Security Snapshot", the browser is redirected to a path of the format /[something]/[id], where [id] represents the id number of the scan. What is the [something]?*
 
-Yritin yhdistää selaimella skannauksesta löytyneeseen HTTP-palvelimeen 10.129.17.241:80, mutta sivusto ei auennut, sillä se ei saanut ladattua fontteja, sekä javascript ohjelmia CDN-palvelimilta (VPN salli yhteydet vain kohdeverkkoon). Testasin, jos curl saisi yhteyden sivustoon.
+Yritin yhdistää selaimella skannauksesta löytyneeseen HTTP-palvelimeen 10.129.17.241:80, mutta sivusto ei auennut. Tämä todennäköisesti johtui sivuston sisältämistä ulkoisista tyyleistä, skripteistä ja fonteista, joita yritettiin ladata verkosta, mutta joihin ei saatu yhteyttä. Testasin, jos curl lataisi sivuston.
 
 ```
 $ curl http://10.129.17.241/
@@ -172,7 +174,7 @@ Sivusto avautui.
 
 Koneen infossa mainittiin sivulla olevan Insecure direct object reference -haavoittuvuus, eli pääsynhallintaan liittyvä haavoittuvuus, jota tyypillisesti hyödynnetään URL-osoitteen ja siihen liitettyjen parametrien kautta. (https://portswigger.net/web-security/access-control/idor)
 
-Sivustolla Security Snapshotin luominen vei osoitteeseen `/data/1`, jossa snapshotin id löytyy polun päätteestä. Kokeilin muutamia erilaisia id:tä, joista 0 löytyi. Esimmäisen tekemäni snapshotin id oli 1, toisen 2..., joten kyseessä oli jonkun toisen tekemä snapshot.
+Sivustolla Security Snapshotin luominen vei osoitteeseen `/data/1`, jossa snapshotin id löytyy polun päätteestä. Kokeilin muutamia erilaisia id:tä, joista "0" löytyi. Esimmäisen tekemäni snapshotin id oli 1, toisen 2..., joten kyseessä oli jonkun toisen tekemä snapshot.
 
 <img width="1844" height="786" alt="image" src="https://github.com/user-attachments/assets/a9d63dce-0ddd-4866-8841-6bf47ceaf5e6" />
 
@@ -267,16 +269,24 @@ Kun pythonin sai siirrettyä rootiksi, lipun sai tulostettua `/root`-hakemistost
 Task 8 ei hyväksynyt minkään käyttämäni binäärin polkua vastaukseksi, joten ilmeisesti oletettu ratkaisu olisi hyödyntänyt jotain muuta haavoittuvuutta koneessa. Tärkeintä kuitenkin on, että liput löytyivät.
 
 ## Lähteet
-https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
+Karvinen 2025: Tunkeutumistestaus: https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
 
-https://cdimage.kali.org/kali-2026.1/kali-linux-2026.1-installer-amd64.iso
+Herrasmieshakkerit: Valokuvien vainukoira, vieraana Teemu M. Nieminen | 0x41: https://herrasmieshakkerit.fi/valokuvien-vainukoira-vieraana-teemu-m-nieminen-0x41/
 
-https://nmap.org/book/man-performance.html
+Hutchins 2011: Intelligence-Driven Computer Network Defense Informed by Analysis of Adversary Campaigns and Intrusion Kill Chains: https://lockheedmartin.com/content/dam/lockheed-martin/rms/documents/cyber/LM-White-Paper-Intel-Driven-Defense.pdf
 
-https://app.hackthebox.com/machines/Cap
+Santos et al: The Art of Hacking (Video Collection): 4.3 Surveying Essential Tools for Active Reconnaissance: https://learning.oreilly.com/videos/the-art-of/9780135767849/9780135767849-SPTT_04_00
 
-https://portswigger.net/web-security/access-control/idor
+KKO 2003:36: https://finlex.fi/fi/oikeus/kko/kko/2003/20030036
 
-https://medium.com/@0xrave/ubuntu-gameover-lay-local-privilege-escalation-cve-2023-32629-and-cve-2023-2640-7830f9ef204a
+kali-linux-2026.1-installer-amd64.iso: https://cdimage.kali.org/kali-2026.1/kali-linux-2026.1-installer-amd64.iso
 
-https://www.reddit.com/r/selfhosted/comments/15ecpck/ubuntu_local_privilege_escalation_cve20232640/
+Nmap: Timing and performance: https://nmap.org/book/man-performance.html
+
+HackTheBox: Cap: https://app.hackthebox.com/machines/Cap
+
+PortSwigger: Insecure direct object references (IDOR): https://portswigger.net/web-security/access-control/idor
+
+0xrave: Ubuntu GameOver(lay) Local Privilege Escalation CVE-2023–32629 and CVE-2023–2640: https://medium.com/@0xrave/ubuntu-gameover-lay-local-privilege-escalation-cve-2023-32629-and-cve-2023-2640-7830f9ef204a
+
+sk1nT7: Ubuntu Local Privilege Escalation (CVE-2023-2640 & CVE-2023-32629): https://www.reddit.com/r/selfhosted/comments/15ecpck/ubuntu_local_privilege_escalation_cve20232640/
