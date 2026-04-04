@@ -3,10 +3,19 @@ Kurssi: https://terokarvinen.com/tunkeutumistestaus/ \
 Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h2-dora-the-explora
 
 ## x) Lue/katso/kuuntele ja tiivistä
-* Buuri 2026: DORA and TLPT testing - Lecture for Haaga-Helia on 31 March 2026 (pdf, 2 MB)
-* DORA (Regulation ... on digital operational resilience for the financial sector) (vain nämä kaksi artiklaa):
+* Buuri 2026: [DORA and TLPT testing - Lecture for Haaga-Helia on 31 March 2026](https://terokarvinen.com/buuri-2026-dora-and-threat-lead-penetration-testing/buuri-2026-dora-and-threat-lead-penetration-testing--teros-pentest-course.pdf) (pdf, 2 MB)
+  * DORA (Digital Operations Resiliance Act) on vuonna 2025 voimaan astunut EU:n rahoitusalaa koskeva regulaatio, joka pitää sisällään mm. digitaalisen resilienssin testausta.
+  * TIBER-FI on TIBER-EU:sta kehitetty viitekehys red-team testaukseen.
+  * TIBER-FI:n mukainen testaus koostuu kolmesta vaiheesta: valmistautumisesta, testauksesta ja päätöksestä.
+  * Testausvaihe perustuu uhkamallinnuksessa luotuihin skenaarioihin, joilla pyritään imitoimaan edistyineiden uhkatoimijoiden toimintamalleja.
+* [DORA (Regulation ... on digital operational resilience for the financial sector)](https://eur-lex.europa.eu/eli/reg/2022/2554/oj/eng) (vain nämä kaksi artiklaa):
   * Article 26 "Advanced testing of ICT tools, systems and processes based on TLPT"
+    * Rahoitusalan toimijoiden, tulee suorittaa uhkiin perustuvaa tunkeutumistestausta vähintään joka kolmas vuosi.
+    * Testauksen tulee kattaa kriittisimmät toiminnot, sekä mahdollisesti käytössä olevan IT-palveluntarjoajan.
+    * Testauksen jälkeen tiivistelmä löydöksistä, sekä niiden korjaussuunnitelma toimitetaan viranomaisille todisteena suoritetusta testauksesta.
   * Article 27 "Requirements for testers for the carrying out of TLPT"
+    * Testaajien tulee olla hyvin päteviä, hallita uhkatiedustelu, tunkeutumistestaus ja red-team testaus, sekä sitoutua ammatillisiin ja eettisiin viitekehyksiin.
+    * Sisäisiä testaajia käytettäessä uhkatiedustelun on tultava ulkoiselta taholta.
 * TIBER-FI procedures and guidelines (pdf, 1 MB) (vain tämä kohta):
   *5.4 Testing phase: Red team testing (johdantokappale suoraan 5.4 alta, "5.4.1 Red team test plan creation" alkuun asti)
 * Vapaaehtoinen bonus: Buuri 2026: D26 - Releasing Your Inner TIBER in Regulated Adversary Simulations. Video, 45 min. Disobey 2026.
