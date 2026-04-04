@@ -238,8 +238,16 @@ OS and Service detection performed. Please report any incorrect results at https
 Nmap done: 1 IP address (1 host up) scanned in 139.05 seconds
 ```
 
-Hyökkääjälle kiinnostavimmat avoinna olevat portit olisivat todennäköisesti 1524, 514 ja 23.
+Hyökkääjälle kiinnostavimmat avoinna olevat portit olisivat todennäköisesti 1524, 23 ja 22.
+
+Nmap tunnistaa portissa 1524 olevan root bind shell, eli portin ohjaa sisääntulevat yhteydet suoraan pääkäyttäjän shelliin. Tämä viittaa siihen, että koneeseen on murtautunut jo aiemmin joku.
+
+Portti 21 on sen vuoksi kiinnostava, sillä sen takana pyörii vsftpd 2.3.4. Kyseinen versio on haavoittuvainen ja sisältää takaoven järjestelmään. (https://www.rapid7.com/db/modules/exploit/unix/ftp/vsftpd_234_backdoor/)
+
+Portti 22 oli kolmas portti, jonka valitsin sillä kyseinen versio SSH:sta sisältää brute-force ja privilege escalation haavoittuvuudet. Näiden haavoittuvuuksien hyödyntämiseen löytyy payloadit suoraan metasploitista, joten lähes kuka tahansa pystyy niitä käyttäen saamaan root-oikeudet koneelle. (https://medium.com/@zendpushkar/ssh-exploitation-brute-force-attack-and-privilege-escalation-e0772c64a77d)
 
 ## f) Vapaaehtoinen bonus: Sisään vaan. Pääsetkö murtautumaan Metasploitableen?
 
-## g) Vapaaehtoinen bonus: jos haluat, voit jo kokeilla metasploit-hyökkäysohjelmaa omaan harjoitusmaaliisi. Tätä katsotaan myöhemmin yhdessäkin. (Muista irrottaa kone Internetistä kokeilujen ajaksi. 'sudo msfdb init', 'sudo msfconsole').
+Helpoin tapa murtautua metasploitableen on kävelemellä suoraan toisen hyökkääjän jättämästä takaovesta sisään. Yhdistin netcatilla suoraan portissa 1524 olevaan bind shelliin.
+
+<img width="246" height="98" alt="image" src="https://github.com/user-attachments/assets/9c6b00ef-44a6-4b9a-9b1d-0afc9ee883c5" />
