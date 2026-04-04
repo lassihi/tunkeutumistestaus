@@ -251,3 +251,23 @@ Portti 22 oli kolmas portti, jonka valitsin sillä kyseinen versio SSH:sta sisä
 Helpoin tapa murtautua metasploitableen on kävelemellä suoraan toisen hyökkääjän jättämästä takaovesta sisään. Yhdistin netcatilla suoraan portissa 1524 olevaan bind shelliin.
 
 <img width="246" height="98" alt="image" src="https://github.com/user-attachments/assets/9c6b00ef-44a6-4b9a-9b1d-0afc9ee883c5" />
+
+
+## g) Vapaaehtoinen bonus: jos haluat, voit jo kokeilla metasploit-hyökkäysohjelmaa omaan harjoitusmaaliisi. Tätä katsotaan myöhemmin yhdessäkin. (Muista irrottaa kone Internetistä kokeilujen ajaksi. 'sudo msfdb init', 'sudo msfconsole').
+
+Portissa 21 olevaan ftp takaoveen löytyi metasploit exploit.
+
+<img width="864" height="473" alt="image" src="https://github.com/user-attachments/assets/2805ae19-26f1-411e-ad65-c840096f12fc" />
+
+Käynnistin metasploitin ja hain vsftpd exploitia.
+
+<img width="869" height="730" alt="image" src="https://github.com/user-attachments/assets/a6f882e8-1c3a-4593-912d-eba91d110609" />
+
+Valitsin exploitin, asetin kohteen, sekä paikallisen osoitteen josta kuunnnellaan yhteyttä kohteesta. Ajoin exploitin komennolla run.
+
+<img width="945" height="833" alt="image" src="https://github.com/user-attachments/assets/74dc9b5f-c23f-422d-a122-bf5b80b1c77f" />
+
+Exploit toimi oikein ja sain kohteeseen meterpreter reverse tcp payloadin. Meterpreterin avulla yhdistin kohteen shelliin, jossa olin rootina. 
+
+<img width="715" height="126" alt="image" src="https://github.com/user-attachments/assets/2541dae8-322b-4277-9d09-ad68640b9186" />
+
