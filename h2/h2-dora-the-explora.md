@@ -16,8 +16,11 @@ Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h2-dora-the-explora
   * Article 27 "Requirements for testers for the carrying out of TLPT"
     * Testaajien tulee olla hyvin päteviä, hallita uhkatiedustelu, tunkeutumistestaus ja red-team testaus, sekä sitoutua ammatillisiin ja eettisiin viitekehyksiin.
     * Sisäisiä testaajia käytettäessä uhkatiedustelun on tultava ulkoiselta taholta.
-* TIBER-FI procedures and guidelines (pdf, 1 MB) (vain tämä kohta):
-  *5.4 Testing phase: Red team testing (johdantokappale suoraan 5.4 alta, "5.4.1 Red team test plan creation" alkuun asti)
+* [TIBER-FI procedures and guidelines](https://www.suomenpankki.fi/globalassets/bof/en/money-and-payments/the-bank-of-finland-as-catalyst-payments-council/tiber-fi/tiber-fi-2.0-procedures-and-guidelines.pdf) (pdf, 1 MB) (vain tämä kohta):
+  * 5.4 Testing phase: Red team testing (johdantokappale suoraan 5.4 alta, "5.4.1 Red team test plan creation" alkuun asti)
+    * Red-team testausvaihe alkaa, kun testaussuunnitelma on hyväksytty.
+    * Testaus voidaan toteuttaa joko black box- tai grey box lähestymistavalla.
+    * Jos red-team ei aikarajoituksen puitteissa pysty etenemään voidaan heille antaa "leg-up".
 * Vapaaehtoinen bonus: Buuri 2026: D26 - Releasing Your Inner TIBER in Regulated Adversary Simulations. Video, 45 min. Disobey 2026.
 
 ## a) Asenna Metasploitable 2 virtuaalikoneeseen.
@@ -255,7 +258,9 @@ Helpoin tapa murtautua metasploitableen on kävelemellä suoraan toisen hyökkä
 
 ## g) Vapaaehtoinen bonus: jos haluat, voit jo kokeilla metasploit-hyökkäysohjelmaa omaan harjoitusmaaliisi. Tätä katsotaan myöhemmin yhdessäkin. (Muista irrottaa kone Internetistä kokeilujen ajaksi. 'sudo msfdb init', 'sudo msfconsole').
 
-Portissa 21 olevaan ftp takaoveen löytyi metasploit exploit.
+Tiesin aiemmista hausta, että portissa 21 olevaan ftp-takaoveen löytyy helppo metasploit exploit, joten päätin hyödyntää sitä.
+
+Ensiksi loin metasploit tietokannan.
 
 <img width="864" height="473" alt="image" src="https://github.com/user-attachments/assets/2805ae19-26f1-411e-ad65-c840096f12fc" />
 
@@ -267,7 +272,6 @@ Valitsin exploitin, asetin kohteen, sekä paikallisen osoitteen josta kuunnnella
 
 <img width="945" height="833" alt="image" src="https://github.com/user-attachments/assets/74dc9b5f-c23f-422d-a122-bf5b80b1c77f" />
 
-Exploit toimi oikein ja sain kohteeseen meterpreter reverse tcp payloadin. Meterpreterin avulla yhdistin kohteen shelliin, jossa olin rootina. 
+Exploit toimi oikein ja sain kohteeseen meterpreter reverse tcp payloadin. Meterpreterin avulla yhdistin kohteen shelliin, jossa olinkin jo suoraan rootina. 
 
 <img width="715" height="126" alt="image" src="https://github.com/user-attachments/assets/2541dae8-322b-4277-9d09-ad68640b9186" />
-
