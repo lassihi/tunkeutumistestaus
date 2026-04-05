@@ -247,7 +247,7 @@ setcap cap_setuid+eip l/python3;mount -t overlay overlay -o rw,lowerdir=l,upperd
 * `mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m`: Mounttaa u-filesystemin l-fs:n päälle käyttäen w-hakemistoa työhakemistona, tästä syntynyt filesystem mountataan u-hakemistoon
 * `touch m/*`: Luo tyhjän tiedoston jokaista m-hakemistossa sijaitsevaa tiedostoa kohden. Bugi tapahtuu tässä, `cap_setuid` kopioituu upperdir:iin ilman pudotusta, eli valittu binääri (`/usr/bin/python3`) pääse vaihtamaan uid:tä.
 * `u/python3 -c 'import os;os.setuid(0);os.system(\"id\")'`: Ajetaan u/python3 binääri, vaihdetaan uid ja tulostetaan se.
-* 
+
 (https://medium.com/@0xrave/ubuntu-gameover-lay-local-privilege-escalation-cve-2023-32629-and-cve-2023-2640-7830f9ef204a)
 
 Ajoin komennon ja se antoi pythonin ajaa pääkäyttäjänä.
@@ -269,7 +269,7 @@ Kun pythonin sai siirrettyä rootiksi, lipun sai tulostettua `/root`-hakemistost
 Task 8 ei hyväksynyt minkään käyttämäni binäärin polkua vastaukseksi, joten ilmeisesti oletettu ratkaisu olisi hyödyntänyt jotain muuta haavoittuvuutta koneessa. Tärkeintä kuitenkin on, että liput löytyivät.
 
 ## Lähteet
-Karvinen 2025: Tunkeutumistestaus: https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
+Karvinen 2026: Tunkeutumistestaus: https://terokarvinen.com/tunkeutumistestaus/#h1-kybertappoketju
 
 Herrasmieshakkerit: Valokuvien vainukoira, vieraana Teemu M. Nieminen | 0x41: https://herrasmieshakkerit.fi/valokuvien-vainukoira-vieraana-teemu-m-nieminen-0x41/
 
