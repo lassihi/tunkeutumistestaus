@@ -21,7 +21,6 @@ Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h2-dora-the-explora
     * Red-team testausvaihe alkaa, kun testaussuunnitelma on hyväksytty.
     * Testaus voidaan toteuttaa joko black box- tai grey box lähestymistavalla.
     * Jos red-team ei aikarajoituksen puitteissa pysty etenemään voidaan heille antaa "leg-up".
-* Vapaaehtoinen bonus: Buuri 2026: D26 - Releasing Your Inner TIBER in Regulated Adversary Simulations. Video, 45 min. Disobey 2026.
 
 ## a) Asenna Metasploitable 2 virtuaalikoneeseen.
 
@@ -245,7 +244,7 @@ Hyökkääjälle kiinnostavimmat avoinna olevat portit olisivat todennäköisest
 
 Nmap tunnistaa portissa 1524 olevan root bind shell, eli portin ohjaa sisääntulevat yhteydet suoraan pääkäyttäjän shelliin. Tämä viittaa siihen, että koneeseen on murtautunut jo aiemmin joku.
 
-Portti 21 on sen vuoksi kiinnostava, sillä sen takana pyörii vsftpd 2.3.4. Kyseinen versio on haavoittuvainen ja sisältää takaoven järjestelmään. (https://www.rapid7.com/db/modules/exploit/unix/ftp/vsftpd_234_backdoor/)
+Portti 21 on  kiinnostava, sillä sen takana pyörii vsftpd 2.3.4. Kyseinen versio on haavoittuvainen ja sisältää takaoven järjestelmään. (https://www.rapid7.com/db/modules/exploit/unix/ftp/vsftpd_234_backdoor/)
 
 Portti 22 oli kolmas portti, jonka valitsin sillä kyseinen versio SSH:sta sisältää brute-force ja privilege escalation haavoittuvuudet. Näiden haavoittuvuuksien hyödyntämiseen löytyy payloadit suoraan metasploitista, joten lähes kuka tahansa pystyy niitä käyttäen saamaan root-oikeudet koneelle. (https://medium.com/@zendpushkar/ssh-exploitation-brute-force-attack-and-privilege-escalation-e0772c64a77d)
 
