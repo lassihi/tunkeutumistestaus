@@ -275,3 +275,19 @@ Valitsin exploitin, asetin kohteen, sekä paikallisen osoitteen josta kuunnnella
 Exploit toimi oikein ja sain kohteeseen meterpreter reverse tcp payloadin. Meterpreterin avulla yhdistin kohteen shelliin, jossa olinkin jo suoraan rootina. 
 
 <img width="715" height="126" alt="image" src="https://github.com/user-attachments/assets/2541dae8-322b-4277-9d09-ad68640b9186" />
+
+# Lähteet
+
+Karvinen 2026: Tunkeutumistestaus: https://terokarvinen.com/tunkeutumistestaus/#h2-dora-the-explora
+
+Buuri 2026: DORA and TLPT testing - Lecture for Haaga-Helia on 31 March 2026: https://terokarvinen.com/buuri-2026-dora-and-threat-lead-penetration-testing/buuri-2026-dora-and-threat-lead-penetration-testing--teros-pentest-course.pdf
+
+DORA (Regulation ... on digital operational resilience for the financial sector: https://eur-lex.europa.eu/eli/reg/2022/2554/oj/eng
+
+TIBER-FI procedures and guidelines: https://www.suomenpankki.fi/globalassets/bof/en/money-and-payments/the-bank-of-finland-as-catalyst-payments-council/tiber-fi/tiber-fi-2.0-procedures-and-guidelines.pdf
+
+Rapid7: Metasploitable: https://www.rapid7.com/products/metasploit/metasploitable/
+
+Rapid7: VSFTPD 2.3.4 Backdoor Command Execution: https://www.rapid7.com/db/modules/exploit/unix/ftp/vsftpd_234_backdoor/
+
+Zend 2024: SSH Exploitation: Brute-Force Attack and Privilege Escalation: https://medium.com/@zendpushkar/ssh-exploitation-brute-force-attack-and-privilege-escalation-e0772c64a77d
