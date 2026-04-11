@@ -10,6 +10,10 @@
 * Token impersonating hyökkäyksellä päästiin sisään Domain Controlleriin, josta dumpattiin tunnukset ja salasanatiivisteet.
 
 Mitä 'nmap -sn' tekee? Älä arvaa, vaan perustele lähteillä. Mistä tiedät, että käyttämäsi lähde on luotettava?
+* `Nmap -sn` ajaa host discoveryn, mutta ei porttiskannausta.
+* Host discovery koostuu ICMP echo requestista (pingistä), TCP SYN viestistä porttiin 443, TCP ACK viestistä porttiin 80 ja ICMP timestamp requestista.
+* Jos skannattava kohde on samassa verkossa, käytetään ARP pyyntöä.
+* Lähde: `man nmap`, https://nmap.org/book/man-host-discovery.html, nmapin virallinen dokumentaatio
 
 ## b) Tallenna porttiskannauksen tuloksia Metasploitin tietokantoihin. Skannaa niin, että Metasploitable tulee mukaan. Kannattaa ottaa mukaan ainakin versioskannaus -sV (joka on banner grabbing plus).
 ## c) Tarkastele Metasploitin tietokantoihin tallennettuja tietoja komennoilla "hosts" ja "services". Kokeile suodattaa näitä listoja tai hakea niistä.
