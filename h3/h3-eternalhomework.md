@@ -3,6 +3,11 @@
 ## x) Lue/katso/kuuntele ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä riittää. Tiivistämiseen riittää muutama ranskalainen viiva.)
 
 € Jaswal 2020: Mastering Metasploit - 4ed: Chapter 1: Approaching a Penetration Test Using Metasploit (kohdasta Conducting a penetration test with Metasploit luvun loppuun eli "Summary" loppuun)
+* Metasploit-viitekehystä käytetään tunkeutumistestaukseen hyödyntäen sen exploit, auxiliary ja payload moduuleja.
+* Case studyssa kohde skannatiin metasploitin nmapilla ja tunnistettiin Windows 7 haavoittuvuus EternalBlue.
+* Metasploitissa käytettiin EternalBlue exploitia, jolla saatiin pääsy kohteeseen ja meterpreter shell.
+* Autoroute moduulia käyttämällä saatiin yhteys toisessa verkossa sijaitsevaan Domain Controlleriin.
+* Token impersonating hyökkäyksellä päästiin sisään Domain Controlleriin, josta dumpattiin tunnukset ja salasanatiivisteet.
 
 Mitä 'nmap -sn' tekee? Älä arvaa, vaan perustele lähteillä. Mistä tiedät, että käyttämäsi lähde on luotettava?
 
