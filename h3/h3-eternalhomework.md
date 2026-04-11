@@ -13,7 +13,10 @@ Mitä 'nmap -sn' tekee? Älä arvaa, vaan perustele lähteillä. Mistä tiedät,
 * `Nmap -sn` ajaa host discoveryn, mutta ei porttiskannausta.
 * Host discovery koostuu ICMP echo requestista (pingistä), TCP SYN viestistä porttiin 443, TCP ACK viestistä porttiin 80 ja ICMP timestamp requestista.
 * Jos skannattava kohde on samassa verkossa, käytetään ARP pyyntöä.
-* Lähde: `man nmap`, https://nmap.org/book/man-host-discovery.html, nmapin virallinen dokumentaatio
+* Lähde: `man nmap`, https://nmap.org/book/man-host-discovery.html, nmapin virallinen dokumentaatio johon viitataan työkalussa
+
+<img width="406" height="39" alt="image" src="https://github.com/user-attachments/assets/cf15ee9a-ba8b-429f-9e00-b4ffeeb25b59" />
+
 
 ## b) Tallenna porttiskannauksen tuloksia Metasploitin tietokantoihin. Skannaa niin, että Metasploitable tulee mukaan. Kannattaa ottaa mukaan ainakin versioskannaus -sV (joka on banner grabbing plus).
 ## c) Tarkastele Metasploitin tietokantoihin tallennettuja tietoja komennoilla "hosts" ja "services". Kokeile suodattaa näitä listoja tai hakea niistä.
