@@ -1,4 +1,4 @@
-# Harjoitus 3: EternalHomework
+<img width="931" height="544" alt="image" src="https://github.com/user-attachments/assets/98755483-2a9b-4243-8aac-8afa04da60cd" /># Harjoitus 3: EternalHomework
 
 ## x) Lue/katso/kuuntele ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä riittää. Tiivistämiseen riittää muutama ranskalainen viiva.)
 
@@ -19,7 +19,31 @@ Mitä 'nmap -sn' tekee? Älä arvaa, vaan perustele lähteillä. Mistä tiedät,
 
 
 ## b) Tallenna porttiskannauksen tuloksia Metasploitin tietokantoihin. Skannaa niin, että Metasploitable tulee mukaan. Kannattaa ottaa mukaan ainakin versioskannaus -sV (joka on banner grabbing plus).
+
+Käynnistin Metasploit tietokannan, sekä Metasploitin.
+```
+sudo msfdb start
+sudo metasploit
+```
+Metasploit consolista porttiskannasin metasploitablen komennolla `db_nmap -T4 -sV 192.168.56.101`
+* `-T4`: Agressiivinen ajoitus
+* `-sV`: Versio tunnistus
+
+<img width="931" height="544" alt="image" src="https://github.com/user-attachments/assets/080849b3-93c0-4faf-8045-c5cafe49a590" />
+
 ## c) Tarkastele Metasploitin tietokantoihin tallennettuja tietoja komennoilla "hosts" ja "services". Kokeile suodattaa näitä listoja tai hakea niistä.
+
+`db_nmap` tallentaa tulokset metasploitin tietokantaan, josta jälkikäteen on mahdollista tarkastella hosteja ja palveluita skannauksen tuloksista.
+
+Skannasin tällä kertaa vain yhden osoitteen, joten hosteja on yksi.
+
+<img width="921" height="139" alt="image" src="https://github.com/user-attachments/assets/b5785095-98b1-4d62-afae-c3906a7093e1" />
+
+Palvelut olivat samat kuin porttiskannauksessa.
+
+<img width="911" height="472" alt="image" src="https://github.com/user-attachments/assets/60239575-ed98-4c6e-a3cd-124da14ad4b5" />
+
+
 ## d) Internet famous. Etsi Metasploitablen mukana tulevista hyökkäyksistä (en: exploits; search) sellainen, joka on ollut julkisuudessa.
 ## e) Vertaile nmap:n omaa tiedostoon tallennusta (-oA foo) ja db_nmap:n tallennusta tietokantoihin. Mitkä ovat eri tiedostomuotojen ja Metasploitin tietokannan hyvät puolet?
 ## f) Murtaudu Metasploitablen vsftpd-palveluun
