@@ -1,5 +1,8 @@
 # Harjoitus 3: EternalHomework
 
+Kurssi: https://terokarvinen.com/tunkeutumistestaus/ \
+Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h3-eternalhomework
+
 ## x) Lue/katso/kuuntele ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä riittää. Tiivistämiseen riittää muutama ranskalainen viiva.)
 
 € Jaswal 2020: Mastering Metasploit - 4ed: Chapter 1: Approaching a Penetration Test Using Metasploit (kohdasta Conducting a penetration test with Metasploit luvun loppuun eli "Summary" loppuun)
@@ -25,11 +28,13 @@ Käynnistin Metasploit tietokannan, sekä Metasploitin.
 sudo msfdb start
 sudo metasploit
 ```
-Metasploit consolista porttiskannasin metasploitablen komennolla `db_nmap -T4 -sV 192.168.56.101`
+Metasploitin shellissä porttiskannasin Metasploitablen komennolla `db_nmap -T4 -sV 192.168.56.101`
 * `-T4`: Agressiivinen ajoitus
 * `-sV`: Versio tunnistus
 
 <img width="931" height="544" alt="image" src="https://github.com/user-attachments/assets/080849b3-93c0-4faf-8045-c5cafe49a590" />
+
+Tulos oli sama, kuin aiemmissa skannauksissa, joita tutkittiin tarkemmin edellisissä raporteissa.
 
 ## c) Tarkastele Metasploitin tietokantoihin tallennettuja tietoja komennoilla "hosts" ja "services". Kokeile suodattaa näitä listoja tai hakea niistä.
 
@@ -51,7 +56,7 @@ Hosteja ja palveluita voi suodattaa merkkijonojen avulla optiolla `-S`. Suodatin
 
 Eräs Metasploitablessa sijaitseva julkisuudessa ollut haavoittuvuus on PostgreSQL-tietokannassa. Tämä haavoittuvuus mahdollistaa joissain Linux-järjestelmissä postgre-käyttäjän kirjoittamaan `/tmp`-tiedostoon, joka taas mahdollistaa koodin ajamisen.
 
-Haavoittuvuuteen löytyy exploit metasploitista.
+Haavoittuvuuteen löytyy exploit Metasploitista.
 
 <img width="943" height="315" alt="image" src="https://github.com/user-attachments/assets/de381608-ba8a-4764-a881-8f856932266f" />
 
@@ -63,17 +68,17 @@ Ajoin nmap skannauksen optiolla `-oA`, joka tallentaa tulokset kolmeen tekstitie
 
 <img width="568" height="250" alt="image" src="https://github.com/user-attachments/assets/c130c32c-4d21-45be-9ee1-6e0555e43bed" />
 
-`.gnmap`-päätteinen tiedosto sisältää tiedot grepattavassa muodossa, `.nmap`-päätteinen tiedosto sisältää nmap komennon tulosteen ja `.xml`-päätteinen tiedosto sisältää tulokset xml-muodossa. 
+`.gnmap`-päätteinen tiedosto sisältää tiedot grepattavassa muodossa, `.nmap`-päätteinen tiedosto sisältää nmap komennon tulosteen ja `.xml`-päätteinen tiedosto sisältää tulokset xml-muodossa. (https://nmap.org/book/man-output.html)
 
 Tekstitiedostojen vahvuus on varmastikin niiden helppo saatavuus ja käytettävyys. Tuloksia voi lukea lähes millä tahansa järjestelmällä ja niitä on helppo esimerkiksi jakaa. `gnmap` tiedosto on erinomainen jos tulostetta halutaan suodattaa grepin avulla, `nmap` tiedosto on paras raportointiin ja `xml` tiedosto on taas paras tulosten läpi käyntiin ohjelmallisesti sen säännöllisen rakenteen vuoksi.
 
-`db_nmap`:n vahvuus on integraatio Metasploitin kanssa. Tulokset tallennetaan Metasploitin tietokantaan, josta niitä on mahdollista suodattaa ja hakea mm. hostien, palveluiden, porttien ja haavoittuvuuksien perustella. Tietokannan ansiosta tuloksiin on helppo palata myöhemmin.
+`db_nmap`:n vahvuus on integraatio Metasploitin kanssa. Tulokset tallennetaan Metasploitin tietokantaan, josta niitä on mahdollista suodattaa ja hakea mm. hostien, palveluiden, porttien ja haavoittuvuuksien perustella. Tietokannan ansiosta tuloksiin on myös helppo palata myöhemmin.
 
 ## f) Murtaudu Metasploitablen vsftpd-palveluun
 
-Tein tämän viime raportissa bonus-tehtävänä (https://github.com/lassihi/tunkeutumistestaus/blob/main/h2/h2-dora-the-explora.md#g-vapaaehtoinen-bonus-jos-haluat-voit-jo-kokeilla-metasploit-hy%C3%B6kk%C3%A4ysohjelmaa-omaan-harjoitusmaaliisi-t%C3%A4t%C3%A4-katsotaan-my%C3%B6hemmin-yhdess%C3%A4kin-muista-irrottaa-kone-internetist%C3%A4-kokeilujen-ajaksi-sudo-msfdb-init-sudo-msfconsole)
+Tein ja raportoin tämän viime viikolla bonus-tehtävänä (https://github.com/lassihi/tunkeutumistestaus/blob/main/h2/h2-dora-the-explora.md#g-vapaaehtoinen-bonus-jos-haluat-voit-jo-kokeilla-metasploit-hy%C3%B6kk%C3%A4ysohjelmaa-omaan-harjoitusmaaliisi-t%C3%A4t%C3%A4-katsotaan-my%C3%B6hemmin-yhdess%C3%A4kin-muista-irrottaa-kone-internetist%C3%A4-kokeilujen-ajaksi-sudo-msfdb-init-sudo-msfconsole)
 
-Lyhyesti:
+Lyhyesti Metasploitissa:
 ```
 > use exploit/unix/ftp/vsftpd_234_backdoor
 > set RHOSTS 192.168.56.101
@@ -87,11 +92,12 @@ VSFTPD-haavoittuvuudesta saatiin Meterpreter root shell Metasploitableen, joka h
 
 <img width="429" height="125" alt="image" src="https://github.com/user-attachments/assets/c5f79333-8fbb-4633-bb65-e729d451e679" />
 
-Levittäytymisellä viitataan hyökkääjän toimiin, joilla tämä pyrkii siirtymään verkossa suotuisempiin mahdollisesti ylläpitäjätileilla varusteltuihin kohteisiin, kuten tuotantopalvelimiin, asiakastietokantoihin, tai domain controlleriin. (https://www.kyberturvallisuuskeskus.fi/fi/ajankohtaista/tunnetko-tunkeutumisen-laajentamisen-osa-1)
+Levittäytymisellä viitataan hyökkääjän toimiin, joilla tämä pyrkii siirtymään verkossa suotuisempiin mahdollisesti ylläpitäjätileillä varusteltuihin kohteisiin, kuten tuotantopalvelimiin, asiakastietokantoihin, tai domain controlleriin. (https://www.kyberturvallisuuskeskus.fi/fi/ajankohtaista/tunnetko-tunkeutumisen-laajentamisen-osa-1)
 
 Levittäytymisen kannalta mielenkiintoisia tietoja ovat muut verkossa olevat yhdistetyt koneet ja niihin käytetyt kirjatumistunnukset, kuten SSH-avaimet.
 
 Kahden käyttäjän kotihakemistosta löytyi SSH-avaimia, joilla voi yrittää kirjautua muihin järjestelmiin.
+
 <img width="483" height="301" alt="image" src="https://github.com/user-attachments/assets/8b593a98-887c-4c09-9c36-25b2476d4c40" />
 
 Meterpreter komennot, kuten `arp`, `ipconfig`, `netstat` ja `route` ovat hyödyllisiä yhdistettyjen verkkojen ja laitteiden tutkimisessa.
@@ -106,7 +112,7 @@ Päätin yrittää aiemmin mainitsemaani Postgres exploitia. Valitsin kohteeksi 
 
 <img width="1090" height="374" alt="image" src="https://github.com/user-attachments/assets/27be3f4c-f5a3-4ba1-ae07-a5748e05a129" />
 
-Katsoin asetukset, jonne oli oletuksena annettu tietokannan käyttäjätunnus ja salasana postgres:postgres. Lisäsin RHOSTS ja LHOST muuttujan.
+Katsoin asetukset, jonne oli oletuksena annettu tietokannan käyttäjätunnus ja salasana postgres:postgres. Lisäsin RHOSTS ja LHOST muuttujat.
 
 <img width="1162" height="784" alt="image" src="https://github.com/user-attachments/assets/24154f17-981d-4259-9613-232ea45536db" />
 
@@ -114,7 +120,7 @@ Ajoin exploitin.
 
 <img width="1259" height="111" alt="image" src="https://github.com/user-attachments/assets/db2a4773-315b-4de4-abd2-209af41a74cd" />
 
-Exploit ilmoitti, että /tmp-tiedostoon onnistuttiin lisäämään payload, mutta sessio ei kuitenkaan käynnistynyt. Kokeilin vielä x86 moduulia exploitista vaihtamalla kohteeksi Linux x86.
+Exploit ilmoitti, että /tmp-tiedostoon onnistuttiin lisäämään payload, mutta sessio ei kuitenkaan käynnistynyt. Kokeilin vielä x86 moduulia exploitista vaihtamalla kohteeksi "Linux x86".
 
 <img width="593" height="31" alt="image" src="https://github.com/user-attachments/assets/5ed43be2-8281-429a-8f4a-c92c4893618d" />
 
@@ -322,3 +328,21 @@ Harjoituksessa käytetyt taktiikat ja tekniikat:
 * Lateral movement SSH:n avulla (ei tehty, käytin esimerkkinä) (Lateral Movement TA0008 -> Remote Services T1021 -> SSH T1021.004)
 
 https://attack.mitre.org/
+
+## Lähteet
+
+Karvinen 2026: EternalHomework: https://terokarvinen.com/tunkeutumistestaus/#h3-eternalhomework
+
+Jaswal 2020: Mastering Metasploit - Fourth Edition: https://www.oreilly.com/library/view/mastering-metasploit/9781838980078/B15076_01_Final_ASB_ePub.xhtml#_idParaDest-31
+
+Nmap: Host discovery: https://nmap.org/book/man-host-discovery.html
+
+Rapid7: PostgreSQL for Linux Payload Execution: https://www.rapid7.com/db/modules/exploit/linux/postgres/postgres_payload/
+
+Nmap: Output: https://nmap.org/book/man-output.html
+
+Hirvonen 2026: Harjoitus 2: Dora the explora: https://github.com/lassihi/tunkeutumistestaus/blob/main/h2/h2-dora-the-explora.md
+
+Traficom 2021: Tunnetko tunkeutumisen laajentamisen (osa 1): https://www.kyberturvallisuuskeskus.fi/fi/ajankohtaista/tunnetko-tunkeutumisen-laajentamisen-osa-1
+
+Mitre: ATT&CK Matrix for Enterprise: https://attack.mitre.org/
