@@ -286,7 +286,30 @@ Loput toiminnot liittyvät kameran, mikrofonin ja audion striimaukseen ja kaappa
 
 ## j) Tallenna shell-sessio tekstitiedostoon script-työkalulla (script -fa log001.txt) tai tmux:lla.
 
+En ollut tallentanut shell sessiota scriptillä, joten loin uuden tallennuksen.
 
+<img width="384" height="42" alt="image" src="https://github.com/user-attachments/assets/733d9c94-f5c8-4e4c-a36f-8f791e264f7d" />
+
+Tein kohdan h) murtautumisen uudelleen ja tämän jälkeen suljin scriptin komennolla `exit`.
 
 ## k) Pivot point. Laita kaikki harjoituksen tiedostot (script -fa, nmap -oA...) samaan kansioon. Hae sopiva pivot point (sovellus, versio, osoite, MAC-numero) 'grep -r' -komennolla. Keksi uskottava esimerkkikysymys, johon haet vastausta.
+
+<img width="471" height="50" alt="image" src="https://github.com/user-attachments/assets/2f8d0f17-e88d-4aad-a2f0-e82f5604420c" />
+
+Poistin tiedostosta edelliset esimerkkiskannaukset ja skannasin kohteen uudestaan samassa hakemistossa.
+
+<img width="547" height="476" alt="image" src="https://github.com/user-attachments/assets/b1b07fd1-c25c-4bfa-8ebd-98959f30db00" />
+
+Greppasin hakemistosta tietoa postgresta.
+
+<img width="1265" height="351" alt="image" src="https://github.com/user-attachments/assets/6c2aa8bd-cd80-4265-a9da-29db0ff006c0" />
+
+Esimerkkikysymys: Millä käyttäjätunnuksella ja salasanalla saatiin hyödynnettyä postgres-haavoittuvuutta.
+
 ## l) Attaaack! Mitä Mitre Attack taktiikoita ja tekniikoita käytit tässä harjoituksessa? (Tässä alakohdassa "Attaack!" ei tarvitse tehdä lisää testejä koneella, koska testit on jo tehty.)
+
+Harjoituksessa käytetyt taktiikat ja tekniikat:
+* Nmap-skannaus (Active scanning, vulnerability scanning T1595.002)
+* 
+
+
