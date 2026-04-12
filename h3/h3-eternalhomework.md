@@ -309,7 +309,16 @@ Esimerkkikysymys: Millä käyttäjätunnuksella ja salasanalla saatiin hyödynne
 ## l) Attaaack! Mitä Mitre Attack taktiikoita ja tekniikoita käytit tässä harjoituksessa? (Tässä alakohdassa "Attaack!" ei tarvitse tehdä lisää testejä koneella, koska testit on jo tehty.)
 
 Harjoituksessa käytetyt taktiikat ja tekniikat:
-* Nmap-skannaus (Active scanning, vulnerability scanning T1595.002)
-* 
+* Nmap-skannaus (Reconnaisance TA0043 -> Active scanning T1595 -> vulnerability scanning T1595.002)
+* VSFTPD- ja Postgres-exploit (Initial Access TA0001 -> Exploit Public-Facing Application T1190)
+* Meterpreter-shell (Execution TA0002 -> Command and Scripting Interpreter T1059)
+* Credential Access (TA0006):
+  * Käyttäjätunnusten ja salasanojen haku (OS Credential Dumping T1003)
+  * SSH-avaimet käyttäjien hakemistoista (Unsecured Credentials -> Private Keys T1552.004)
+* Discovery (TA0007):
+  * Järjestelmätietojen lukeminen, `sysinfo` (System Information Discovery T1082)
+  * Verkkokonfiguraation lukeminen, `arp`, `ipconfig`, `route` (System Network Configuration Discovery T1016)
+  * Aktiivisten yhteyksien tarkastaminen, `netstat` (System Network Connections Discovery T1049)
+* Lateral movement SSH:n avulla (ei tehty, käytin esimerkkinä) (Lateral Movement TA0008 -> Remote Services T1021 -> SSH T1021.004)
 
-
+https://attack.mitre.org/
