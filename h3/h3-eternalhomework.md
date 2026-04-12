@@ -1,4 +1,4 @@
-<img width="568" height="250" alt="image" src="https://github.com/user-attachments/assets/58a8d78d-8274-453b-bf6f-097f529e08ef" /># Harjoitus 3: EternalHomework
+# Harjoitus 3: EternalHomework
 
 ## x) Lue/katso/kuuntele ja tiivistä. (Tässä x-alakohdassa ei tarvitse tehdä testejä tietokoneella, vain lukeminen tai kuunteleminen ja tiivistelmä riittää. Tiivistämiseen riittää muutama ranskalainen viiva.)
 
