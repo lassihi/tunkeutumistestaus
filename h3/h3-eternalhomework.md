@@ -89,6 +89,9 @@ VSFTPD-haavoittuvuudesta saatiin Meterpreter root shell Metasploitableen, joka h
 
 Levittäytymisellä viitataan hyökkääjän toimiin, joilla tämä pyrkii siirtymään verkossa suotuisempiin mahdollisesti ylläpitäjätileilla varusteltuihin kohteisiin, kuten tuotantopalvelimiin, asiakastietokantoihin, tai domain controlleriin. (https://www.kyberturvallisuuskeskus.fi/fi/ajankohtaista/tunnetko-tunkeutumisen-laajentamisen-osa-1)
 
+Levittäytymisen kannalta mielenkiintoisia tietoja ovat muut verkossa olevat yhdistetyt koneet ja niihin käytetyt kirjatumistunnukset, kuten SSH-avaimet.
+
+<img width="483" height="301" alt="image" src="https://github.com/user-attachments/assets/8b593a98-887c-4c09-9c36-25b2476d4c40" />
 
 
 ## h) Murtaudu Metasploitableen jollain toisella tavalla. (Jos tämä kohta on vaikea, voit tarvittaessa turvautua verkosta löytyviin läpikävelyohjeisiin. Merkitse silloin raporttiin, missä määrin tarvitsit niitä).
