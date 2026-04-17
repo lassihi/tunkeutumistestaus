@@ -24,3 +24,10 @@ PortSwigget Academy: [Insecure direct object references](https://portswigger.net
   * Haavoittuvuutta tyypillisesti hyödynnetään syöttämällä halutun resurssin suhteellinen tai absoluuttinen sijainti URL-osoitteen parametriksi.
   * Haavoittuvuus ehkäistään välttämällä kokonaan käyttäjän syötteen syöttämistä tiedostojärjestelmien ohjelmointirajapinnoille.
 * Cross-site scripting
+  * Haavoittuvuus, jossa hyökkääjä pääsee lisäämään haitallista javascriptiä verkkosivulle, niin että se ajetaan käyttäjän selaimessa.
+  * Mahdollistaa hyökkääjälle täyden hallinnan käyttäjän istunnosta.
+  * XSS tyypit:
+    * Reflected XSS: Haitallinen koodi tulee HTTP-pyynnöstä
+    * Stored XSS: Haitallinen koodi tulee sivuston tietokannasta
+    * DOM-based XSS: Haavoittuvuus sijaitsee asiakaspään koodissa
+  * Haavoittuvuus ehkäistään suodattamalla käyttäjien syötteet, enkoodaamalla tuloste asianmukaisesti, käyttämällä oikeita headereita ja viimekädessä selainten Conten Security Policyn avulla
