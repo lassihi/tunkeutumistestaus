@@ -13,5 +13,14 @@ OWASP 2021: OWASP Top 10:2021: [A01:2021 – Broken Access Control](https://owas
 
 PortSwigget Academy: [Insecure direct object references](https://portswigger.net/web-security/access-control/idor) (IDOR), [Path traversal](https://portswigger.net/web-security/file-path-traversal) ja [Cross-site scripting](https://portswigger.net/web-security/cross-site-scripting)
 * IDOR
+  * Pääsynhallinnan haavoittuvuus.
+  * Haavoittuvuus syntyy, kun ohjelma käyttää suoraan käyttäjän syöttämää tietoa objektien hakemiseen ja käyttämiseen.
+  * Yleisesti käytetään horisontaaliseen oikeuksien laajentamiseen, mutta voi ilmetä myös liittyen vertikaaliseen oikeuksien laajentamiseen.
+  * Tyypillisessä skenaariossa muokataan URL-parametrissa olevaa dataa, esimerkiksi vaihdetaan haettava id.
+    * Käytin kyseistä haavoittuvuutta ensimmäisessä kotitehtävässä HackTheBox:n Cap-koneeseen (https://github.com/lassihi/tunkeutumistestaus/blob/main/h1/h1-kybertappoketju.md#task-3-are-you-able-to-get-to-other-users-scans)
 * Path traversal
+  * Pääsynhallinnan haavoittuvuus.
+  * Haavoittuvuus mahdollistaa käyttäjän navigoimaan palvelimen tiedostorakennetta, sekä lukemaan ja mahdollisesti manipuloimaan siellä sijaitsevia tiedostoja.
+  * Haavoittuvuutta tyypillisesti hyödynnetään syöttämällä halutun resurssin suhteellinen tai absoluuttinen sijainti URL-osoitteen parametriksi.
+  * Haavoittuvuus ehkäistään välttämällä kokonaan käyttäjän syötteen syöttämistä tiedostojärjestelmien ohjelmointirajapinnoille.
 * Cross-site scripting
