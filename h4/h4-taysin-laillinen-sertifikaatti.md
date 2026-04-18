@@ -56,3 +56,15 @@ Lisätäkseni ZAPin proxyksi Firefoxiin avasin yhteysasetukset yleisten asetuste
 Asetin ZAPin kaappaaman kuvia valitsemalla ZAPin asetuksista "Process images in HTTP requests/responses".
 
 <img width="929" height="577" alt="image" src="https://github.com/user-attachments/assets/90664ab0-39f5-49f9-bde8-85794c0f1661" />
+
+Todistaakseni että proxy toimii, aloitin uuden session ZAPissa ja uudelleenlatasin kurssisivun https://terokarvinen.com/tunkeutumistestaus/. Pyyntö tuli näkyviin historiaan ja sitä klikkaamalla sain avattua myös palvelimen lähettämän vastauksen salaamattomassa muodossa.
+
+<img width="1915" height="1040" alt="image" src="https://github.com/user-attachments/assets/36c1c667-e414-4d4c-aa35-ef4eb7ec7aec" />
+
+Myös sivun lataamia kuvia näkyi ZAPissa.
+
+<img width="1328" height="867" alt="image" src="https://github.com/user-attachments/assets/671d3d02-2805-4929-a7c4-96d836829e65" />
+
+## b) Kettumaista. Asenna "FoxyProxy Standard" Firefox Addon, ja lisää ZAP proxyksi siihen. Käytä FoxyProxyn "Patterns" -toimintoa, niin että vain valitsemasi weppisivut ohjataan Proxyyn.
+
+Asensin FoxyProxy
