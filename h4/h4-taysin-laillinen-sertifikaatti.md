@@ -75,3 +75,35 @@ Kun FoxyProxy oli selaimessa, avasin sen asetukset kohtaan "Proxies" ja lisäsin
 
 <img width="1206" height="500" alt="image" src="https://github.com/user-attachments/assets/3c44298b-63b2-44c6-97ae-c61b2f87fd21" />
 
+Lisäsin proxyyn patternin proxyasetusten alta. Laitoin sen lähettämään vain kurssisivun, sekä kurssisivun alla olevat resurssit ZAPiin.
+
+<img width="878" height="284" alt="image" src="https://github.com/user-attachments/assets/
+ca940e40-5754-4c52-a148-b10082065fae" />
+
+Asetin Foxyproxyssä päälle "Proxy by Patterns".
+
+Loin ZAPissa uuden session, ja selailin kurssivulla, sekä muilla verkkosivuilla kuten githubissa. Tarkastin ZAPin ja se näytti vain pyynnöt jotka kuuluivat filtteriin, joten filtteri toimii.
+
+<img width="941" height="880" alt="image" src="https://github.com/user-attachments/assets/9a95e679-6802-4859-85fb-6b37babc23c8" />
+
+## PortSwigger Labs. Ratkaise tehtävät. Selitä ratkaisusi: mitä palvelimella tapahtuu, mitä eri osat tekevät, miten hyökkäys löytyi, mistä vika johtuu.
+
+### Cross Site Scripting (XSS)
+
+#### c) Reflected XSS into HTML context with nothing encoded
+
+#### d) Stored XSS into HTML context with nothing encoded
+
+#### e) Selitä esimerkin avulla, mitä hyökkääjä hyötyy XSS-hyökkäyksestä. Alert("Hei Tero!") ei vielä tarjoa kummoista pääsyä
+
+### Path traversal
+
+#### f) File path traversal, simple case. Laita tarvittaessa Zapissa kuvien sieppaus päälle.
+
+#### g) File path traversal, traversal sequences blocked with absolute path bypass
+
+#### h) File path traversal, traversal sequences stripped non-recursively
+
+### Insecure Direct Object Reference (IDOR)
+
+#### i) Insecure direct object references
