@@ -31,3 +31,28 @@ PortSwigget Academy: [Insecure direct object references](https://portswigger.net
     * Stored XSS: Haitallinen koodi tulee sivuston tietokannasta
     * DOM-based XSS: Haavoittuvuus sijaitsee asiakaspään koodissa
   * Haavoittuvuus ehkäistään suodattamalla käyttäjien syötteet, enkoodaamalla tuloste asianmukaisesti, käyttämällä oikeita headereita ja viimekädessä selainten Conten Security Policyn avulla
+
+## Totally Legit Sertificate. Asenna OWASP ZAP, generoi CA-sertifikaatti ja asenna se selaimeesi. Laita ZAP proxyksi selaimeesi, sieppaamaan kuvia ja osoita, että hakupyynnöt ilmestyvät käyttöliittymään.
+
+Päivitin paketit ja asensin ZAPin.
+
+```
+sudo apt-get update
+sudo apt-get install zaproxy
+```
+
+Avasin ZAPin, `zaproxy`. Valitsin oletusasetukset session tallennuksesta.
+
+<img width="1023" height="806" alt="image" src="https://github.com/user-attachments/assets/c6b6b28d-4bef-4af0-a098-2d5044b7524e" />
+
+Loin uuden Root CA sertifikaatin Tools -> Options -> Network -> Server Certificates alta napista "Generate". Tallensin uuden sertifikaatin kotihakemistooni "Save" napista.
+
+Sertifikaatin asentamiseksi Firefoxiin avasin selaimen certificate managerin ja kohdasta authorities importasin sertifikaattitiedoston.
+
+Lisätäkseni ZAPin proxyksi Firefoxiin avasin yhteysasetukset yleisten asetusten alta. Valitsin manuaalisen proxy konfiguraation ja lisäsin ZAPin osoitteen ja portin. Oikea osoite ja portti löytyi ZAPin yleisnäkymän alalaidasta.
+
+<img width="753" height="824" alt="image" src="https://github.com/user-attachments/assets/b762c903-adfa-4b75-90fd-cf9b2433b5b9" />
+
+Asetin ZAPin kaappaaman kuvia valitsemalla ZAPin asetuksista "Process images in HTTP requests/responses".
+
+<img width="929" height="577" alt="image" src="https://github.com/user-attachments/assets/90664ab0-39f5-49f9-bde8-85794c0f1661" />
