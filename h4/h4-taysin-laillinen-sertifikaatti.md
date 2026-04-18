@@ -67,4 +67,11 @@ Myös sivun lataamia kuvia näkyi ZAPissa.
 
 ## b) Kettumaista. Asenna "FoxyProxy Standard" Firefox Addon, ja lisää ZAP proxyksi siihen. Käytä FoxyProxyn "Patterns" -toimintoa, niin että vain valitsemasi weppisivut ohjataan Proxyyn.
 
-Asensin FoxyProxy
+Lisäsin FoxyProxy Standardin Firefoxiin lisäosakaupasta addons.mozilla.org, ja annoin sille vaadittavat oikeudet toimia selaimessa.
+
+<img width="473" height="323" alt="image" src="https://github.com/user-attachments/assets/cc9510a6-51d8-49fb-9756-6b7a8f456d95" />
+
+Kun FoxyProxy oli selaimessa, avasin sen asetukset kohtaan "Proxies" ja lisäsin ZAPin seuraavilla asetuksilla:
+
+<img width="1206" height="500" alt="image" src="https://github.com/user-attachments/assets/3c44298b-63b2-44c6-97ae-c61b2f87fd21" />
+
