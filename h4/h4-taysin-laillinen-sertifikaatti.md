@@ -138,9 +138,43 @@ Yleisimmin XSS-hyökkäystä hyödynnetään keksien, salasanojen ja CSRF-tokeni
 
 #### f) File path traversal, simple case. Laita tarvittaessa Zapissa kuvien sieppaus päälle.
 
+Lab: https://portswigger.net/web-security/file-path-traversal/lab-simple, tavoitteena saada `/etc/passwd` tiedoston sisältö.
 
+Laitoin ZAPin päälle, sekä FoxyProxyn näyttämään vain labiin kuuluvat pyynnöt.
+
+<img width="1140" height="72" alt="image" src="https://github.com/user-attachments/assets/d300819f-9ddd-4813-857e-dd66989bd780" />
+
+Labi sisälsi kaupan, jossa oli erilaisia tuotteita.
+
+<img width="1276" height="1014" alt="image" src="https://github.com/user-attachments/assets/331a29e0-0d69-41e0-b86a-c52287cb10f9" />
+
+Avasin yhden tuotteen sivun ja tarkastelin pyyntöjä ZAPissa. Labin kuvaksessa kerrottiin haavoittuvuuden olevan tuotekuvien näyttämisessä, joten etsin pyynnön liittyen tuotekuvaan.
+
+<img width="1910" height="1049" alt="image" src="https://github.com/user-attachments/assets/65a4dc6e-1bab-4d6d-b938-48e805793cd1" />
+
+<img width="1036" height="587" alt="image" src="https://github.com/user-attachments/assets/91fb447a-6f7a-48cb-969a-a377aa8baf92" />
+
+Lähetin kuvan pyynnön Requester tabiin (Ctrl+W).
+
+<img width="1310" height="543" alt="image" src="https://github.com/user-attachments/assets/35089093-1bdf-462a-87a1-0c0d40c2e6e0" />
+
+Muutin pyynnön URL-osoitetta vaihtamalla parametriksi halutun tiedoston.
+
+<img width="1326" height="535" alt="image" src="https://github.com/user-attachments/assets/68a7f90e-4f0c-4b73-ae9b-56cc1270a7cb" />
+
+Lähetin pyynnön, johon palautettiin 400 Bad Request.
+
+<img width="1312" height="539" alt="image" src="https://github.com/user-attachments/assets/2c34d158-82a2-4557-bcda-dc18afc02c2e" />
+
+Muutin pyyntöä vaihtamalla osoitteen suhteelliseksi. Lähetin pyynnön ja vastaukseksi tuli 200 OK. Vaihdoin vastauksen näkymäksi text ja näin tiedoston /etc/passwd sisällön.
+
+<img width="1319" height="531" alt="image" src="https://github.com/user-attachments/assets/bc2c1be5-c3da-42d7-8008-219a8d8a7a6e" />
+
+Siirryin selaimella labiin joka ilmoitti sen suoritetuksi.
 
 #### g) File path traversal, traversal sequences blocked with absolute path bypass
+
+Lab: https://portswigger.net/web-security/file-path-traversal/lab-absolute-path-bypass
 
 #### h) File path traversal, traversal sequences stripped non-recursively
 
