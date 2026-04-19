@@ -10,6 +10,7 @@ OWASP 2021: OWASP Top 10:2021: [A01:2021 – Broken Access Control](https://owas
 * Broken access control haavoittuvuus tarkoittaa, että käyttäjä pääsee käsiksi resursseihin joihin hänellä ei tulisi olla oikeuksia
 * Broken access control -luokka on laaja ja kattaa kymmeniä haavoittuvuustyyppejä alleen.
 * Haavoittuvuuksien ehkäisyn kannalta oleellisia asioita ovat mm. pääsynhallinnan palvelinpään tarkistukset, least privilege ja deny by default -perjaatteet, haavoittuvuus-skannaus ja rate limitit.
+* Haavoittuvuus on selvästi triviaali paikata, mutta yleinen sillä kun on suuria määriä erilaisia sivuja ja endpointeja, niin joku niistä helposti unohtuu pääsynhallinnan ulkopuolelle.
 
 PortSwigget Academy: [Insecure direct object references](https://portswigger.net/web-security/access-control/idor) (IDOR), [Path traversal](https://portswigger.net/web-security/file-path-traversal) ja [Cross-site scripting](https://portswigger.net/web-security/cross-site-scripting)
 * IDOR
@@ -49,7 +50,7 @@ Loin uuden Root CA sertifikaatin Tools -> Options -> Network -> Server Certifica
 
 Sertifikaatin asentamiseksi Firefoxiin avasin selaimen certificate managerin ja kohdasta authorities importasin sertifikaattitiedoston.
 
-Lisätäkseni ZAPin proxyksi Firefoxiin avasin yhteysasetukset yleisten asetusten alta. Valitsin manuaalisen proxy konfiguraation ja lisäsin ZAPin osoitteen ja portin. Oikea osoite ja portti löytyi ZAPin yleisnäkymän alalaidasta.
+Lisätäkseni ZAPin proxyksi Firefoxiin avasin yhteysasetukset yleisten asetusten alta. Valitsin manuaalisen proxykonfiguraation ja lisäsin ZAPin osoitteen ja portin. Oikea osoite ja portti löytyi ZAPin yleisnäkymän alalaidasta.
 
 <img width="753" height="824" alt="image" src="https://github.com/user-attachments/assets/b762c903-adfa-4b75-90fd-cf9b2433b5b9" />
 
