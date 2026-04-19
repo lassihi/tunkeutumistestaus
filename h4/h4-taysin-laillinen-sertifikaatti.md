@@ -88,17 +88,57 @@ Loin ZAPissa uuden session, ja selailin kurssivulla, sekä muilla verkkosivuilla
 
 ## PortSwigger Labs. Ratkaise tehtävät. Selitä ratkaisusi: mitä palvelimella tapahtuu, mitä eri osat tekevät, miten hyökkäys löytyi, mistä vika johtuu.
 
+Ennen tehtäviä loin tunnukset PortSwiggeriin päästäkseni käsiksi labeihin.
+
 ### Cross Site Scripting (XSS)
 
 #### c) Reflected XSS into HTML context with nothing encoded
 
+Lab: https://portswigger.net/web-security/cross-site-scripting/reflected/lab-html-context-nothing-encoded
+
+Labi sisältää blogisivuston, joka näyttää sisältävän muumataman artikkelin, sekä hakukentän. Artikkeleita on myös mahdollista kommentoida. Keskityin heti aluksi hakukenttään ja kokeilin sen toiminnallisuutta. Hain sanaa "history".
+
+<img width="787" height="941" alt="image" src="https://github.com/user-attachments/assets/ac9c7394-29fc-4374-8ed4-b42545f26ed6" />
+
+Hakemani sana liitettiin sivun HTML:ään, joten lähdin kokeilemaan jos siinä olisi XSS-haavoittuvuus.
+
+Lisäsin hakukenttään seuraavan HTML:n `<script>alert("hello world")</script>`.
+
+<img width="1223" height="939" alt="image" src="https://github.com/user-attachments/assets/e5d110de-faef-42a9-9c84-324f8330d8e3" />
+
+XSS onnistui.
+
 #### d) Stored XSS into HTML context with nothing encoded
 
-#### e) Selitä esimerkin avulla, mitä hyökkääjä hyötyy XSS-hyökkäyksestä. Alert("Hei Tero!") ei vielä tarjoa kummoista pääsyä
+Lab: https://portswigger.net/web-security/cross-site-scripting/stored/lab-html-context-nothing-encoded
+
+Samantyylinen blogisivusto avautui, kuin edellisessä labissa, mutta ilman hakukenttää. Lähdin heti testaamaan kommentointia, sillä haavoittuvaisena se voi johtaa stored XSS:ään. Kommentit lisätään sivuston tietokantaan, josta ne tarjoillaan kävijoille.
+
+Lähetin yhteen artikkeleista kommentin, jonka tekstikenttään lisäsin XSS payloadin.
+
+<img width="741" height="622" alt="image" src="https://github.com/user-attachments/assets/8143e31b-2dc1-402e-a868-cd6ba1d363c8" />
+
+Lähetin kommentin ja sain labin läpi.
+
+<img width="1225" height="438" alt="image" src="https://github.com/user-attachments/assets/5807557a-8b9f-43d1-9e09-4226f1dbbf1f" />
+
+Kun kommentoimani artikkelin avasi tuli ensiksi näkyviin alert.
+
+<img width="740" height="272" alt="image" src="https://github.com/user-attachments/assets/3c08f9a1-e58f-454a-8eab-ca0b6f5a5b46" />
+
+#### e) Selitä esimerkin avulla, mitä hyökkääjä hyötyy XSS-hyökkäyksestä. Alert("Hei Tero!") ei vielä tarjoa kummoista pääsyä.
+
+Cross-site scriptingin avulla hyökkääjä saa täyden hallinnan käyttäjän istunnosta. Alert funktiolla ei ole tarkoitus saada tuhoa aikaan, vaan sillä testataan meneekä annettu JavaScript ajoon selaimessa, eli toimiiko hyökkäys.
+
+Yleisesti XSS-hyökkäyksen hyöty riippu session ja sivuston arvosta. Jos kyseessä on staattinen julkinen staattinen verkkosivu, niin hyökkääjä ei siitä hirveästi hyödy, sillä kaikki sisältö on julkista. Jos kyseessä on kuitenkin sivusto, joka sisältää arkaluontoista dataa ja hyökkäyksen uhriksi joutuu käyttäjä, jolla on normaalia laajemmat oikeudet sivustolla, niin hyökkääjä voi hyötyä haavoittuvuudesta suuresti. (https://portswigger.net/web-security/cross-site-scripting#impact-of-xss-vulnerabilities). Jos data on tarpeeksi arvokasta, niin joku on siitä valmis maksamaan, jolloin hyökkääjä saa suoraan taloudellisen hyödyn hyökkäyksestä. 
+
+Yleisimmin XSS-hyökkäystä hyödynnetään keksien, salasanojen ja CSRF-tokenien varastamiseen. Verkkosivustot ja selaimet käyttävät keksejä sessioiden tunnistamiseen, joten niiden avulla hyökkääjän on mahdollista toimia toisena käyttäjänä verkkosivulla. Salasanojen merkitys on varmasti selkää, ne mahdollistavat hyökkääjän kirjautumaan toisena käyttäjänä. Uhrin CSRF-tokenin varastaminen tästä haavoittuvaisen CSRF-hyökkäykselle. (https://portswigger.net/web-security/cross-site-scripting/exploiting#exploiting-cross-site-scripting-to-steal-cookies)
 
 ### Path traversal
 
 #### f) File path traversal, simple case. Laita tarvittaessa Zapissa kuvien sieppaus päälle.
+
+
 
 #### g) File path traversal, traversal sequences blocked with absolute path bypass
 
