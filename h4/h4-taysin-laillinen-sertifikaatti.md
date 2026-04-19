@@ -67,6 +67,8 @@ Myös sivun lataamia kuvia näkyi ZAPissa.
 
 ## b) Kettumaista. Asenna "FoxyProxy Standard" Firefox Addon, ja lisää ZAP proxyksi siihen. Käytä FoxyProxyn "Patterns" -toimintoa, niin että vain valitsemasi weppisivut ohjataan Proxyyn.
 
+Käytin FoxyProxyn asentamiseen ja ZAPin lisäämiseen siihen Proxywayn artikkelia https://proxyway.com/guides/foxyproxy-chrome-firefox.
+
 Lisäsin FoxyProxy Standardin Firefoxiin lisäosakaupasta addons.mozilla.org, ja annoin sille vaadittavat oikeudet toimia selaimessa.
 
 <img width="473" height="323" alt="image" src="https://github.com/user-attachments/assets/cc9510a6-51d8-49fb-9756-6b7a8f456d95" />
@@ -80,7 +82,7 @@ Lisäsin proxyyn patternin proxyasetusten alta. Laitoin sen lähettämään vain
 <img width="878" height="284" alt="image" src="https://github.com/user-attachments/assets/
 ca940e40-5754-4c52-a148-b10082065fae" />
 
-Asetin Foxyproxyssä päälle "Proxy by Patterns".
+Asetin Foxyproxyssä päälle klikkaamalla "Proxy by Patterns".
 
 Loin ZAPissa uuden session, ja selailin kurssivulla, sekä muilla verkkosivuilla kuten githubissa. Tarkastin ZAPin ja se näytti vain pyynnöt jotka kuuluivat filtteriin, joten filtteri toimii.
 
@@ -132,7 +134,7 @@ Cross-site scriptingin avulla hyökkääjä saa täyden hallinnan käyttäjän i
 
 Yleisesti XSS-hyökkäyksen hyöty riippu session ja sivuston arvosta. Jos kyseessä on staattinen julkinen staattinen verkkosivu, niin hyökkääjä ei siitä hirveästi hyödy, sillä kaikki sisältö on julkista. Jos kyseessä on kuitenkin sivusto, joka sisältää arkaluontoista dataa ja hyökkäyksen uhriksi joutuu käyttäjä, jolla on normaalia laajemmat oikeudet sivustolla, niin hyökkääjä voi hyötyä haavoittuvuudesta suuresti. (https://portswigger.net/web-security/cross-site-scripting#impact-of-xss-vulnerabilities). Jos data on tarpeeksi arvokasta, niin joku on siitä valmis maksamaan, jolloin hyökkääjä saa suoraan taloudellisen hyödyn hyökkäyksestä. 
 
-Yleisimmin XSS-hyökkäystä hyödynnetään keksien, salasanojen ja CSRF-tokenien varastamiseen. Verkkosivustot ja selaimet käyttävät keksejä sessioiden tunnistamiseen, joten niiden avulla hyökkääjän on mahdollista toimia toisena käyttäjänä verkkosivulla. Salasanojen merkitys on varmasti selkää, ne mahdollistavat hyökkääjän kirjautumaan toisena käyttäjänä. Uhrin CSRF-tokenin varastaminen tästä haavoittuvaisen CSRF-hyökkäykselle. (https://portswigger.net/web-security/cross-site-scripting/exploiting#exploiting-cross-site-scripting-to-steal-cookies)
+Yleisimmin XSS-hyökkäystä hyödynnetään keksien, salasanojen ja CSRF-tokenien varastamiseen. Verkkosivustot ja selaimet käyttävät keksejä sessioiden tunnistamiseen, joten niiden avulla hyökkääjän on mahdollista toimia toisena käyttäjänä verkkosivulla. Salasanojen merkitys on varmasti selkää, ne mahdollistavat hyökkääjän kirjautumaan toisena käyttäjänä. Uhrin CSRF-tokenin varastaminen tästä haavoittuvaisen CSRF-hyökkäykselle. (https://portswigger.net/web-security/cross-site-scripting/exploiting)
 
 ### Path traversal
 
@@ -204,7 +206,7 @@ Tämä meni läpi ja sain /etc/passwd sisällön ja samalla labran läpi.
 
 #### i) Insecure direct object references
 
-Lab: https://portswigger.net/web-security/access-control/lab-insecure-direct-object-reference, "This lab stores user chat logs directly on the server's file system, and retrieves them using static URLs. Solve the lab by finding the password for the user carlos, and logging into their account."
+Lab: https://portswigger.net/web-security/access-control/lab-insecure-direct-object-references, "This lab stores user chat logs directly on the server's file system, and retrieves them using static URLs. Solve the lab by finding the password for the user carlos, and logging into their account."
 
 Vaihdoin FoxyProxyssä filterin labraan. Avasin labran ja siirryin sivuston chattiin.
 
@@ -232,3 +234,32 @@ Tunnukset olivat oikein ja sain labran suoritettua.
 
 ## Lähteet
 
+Karvinen 2026: Täysin Laillinen Sertifikaatti: https://terokarvinen.com/tunkeutumistestaus/#h4-taysin-laillinen-sertifikaatti
+
+Owasp: A01:2021 – Broken Access Control: https://owasp.org/Top10/2021/A01_2021-Broken_Access_Control/index.html
+
+PortSwigger: Insecure direct object references (IDOR): https://portswigger.net/web-security/access-control/idor
+
+PortSwigger: Path traversal: https://portswigger.net/web-security/file-path-traversal
+
+PortSwigger: Cross-site scripting: https://portswigger.net/web-security/cross-site-scripting
+
+Proxyway: How to Use FoxyProxy on Chrome and Firefox: https://proxyway.com/guides/foxyproxy-chrome-firefox
+
+PortSwigger: Lab: Reflected XSS into HTML context with nothing encoded: https://portswigger.net/web-security/cross-site-scripting/reflected/lab-html-context-nothing-encoded
+
+PortSwigger: Lab: Stored XSS into HTML context with nothing encoded: https://portswigger.net/web-security/cross-site-scripting/stored/lab-html-context-nothing-encoded
+
+PortSwigger: Impact of XSS vulnerabilities: https://portswigger.net/web-security/cross-site-scripting#impact-of-xss-vulnerabilities
+
+PortSwigger: Exploiting cross-site scripting vulnerabilities: https://portswigger.net/web-security/cross-site-scripting/exploiting
+
+PortSwigger: Lab: File path traversal, simple case: https://portswigger.net/web-security/file-path-traversal/lab-simple
+
+PortSwigger: Lab: File path traversal, traversal sequences blocked with absolute path bypass: https://portswigger.net/web-security/file-path-traversal/lab-absolute-path-bypass
+
+PortSwigger: Lab: File path traversal, traversal sequences stripped non-recursively: https://portswigger.net/web-security/file-path-traversal/lab-sequences-stripped-non-recursively
+
+PortSwagger: Common obstacles to exploiting path traversal vulnerabilities: https://portswigger.net/web-security/file-path-traversal#common-obstacles-to-exploiting-path-traversal-vulnerabilities
+
+PortSwigger: Lab: Insecure direct object references: https://portswigger.net/web-security/access-control/lab-insecure-direct-object-references
