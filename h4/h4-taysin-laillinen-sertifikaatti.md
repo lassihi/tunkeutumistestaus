@@ -166,7 +166,7 @@ Lähetin pyynnön, johon palautettiin 400 Bad Request.
 
 <img width="1312" height="539" alt="image" src="https://github.com/user-attachments/assets/2c34d158-82a2-4557-bcda-dc18afc02c2e" />
 
-Muutin pyyntöä vaihtamalla osoitteen suhteelliseksi. Lähetin pyynnön ja vastaukseksi tuli 200 OK. Vaihdoin vastauksen näkymäksi text ja näin tiedoston /etc/passwd sisällön.
+Muutin pyyntöä vaihtamalla "matkustamalla" /etc/passwd tiedostoon. Lähetin pyynnön ja vastaukseksi tuli 200 OK. Vaihdoin vastauksen näkymäksi text ja näin tiedoston /etc/passwd sisällön.
 
 <img width="1319" height="531" alt="image" src="https://github.com/user-attachments/assets/bc2c1be5-c3da-42d7-8008-219a8d8a7a6e" />
 
@@ -174,10 +174,61 @@ Siirryin selaimella labiin joka ilmoitti sen suoritetuksi.
 
 #### g) File path traversal, traversal sequences blocked with absolute path bypass
 
-Lab: https://portswigger.net/web-security/file-path-traversal/lab-absolute-path-bypass
+Lab: https://portswigger.net/web-security/file-path-traversal/lab-absolute-path-bypass, tavoitteena saada `/etc/passwd` tiedoston sisältö.
+
+Vaihdoin Ensiksi FoxyProxyssä filterin uuteen labraa. Sivusto on samanlainen kauppa kuin edellisessä harjoituksessa. Avasin jälleen tuotteen ja hain sen lataaman kuvan ZAPissa.
+
+<img width="1917" height="833" alt="image" src="https://github.com/user-attachments/assets/fcebae63-058f-44c0-bb2b-42ead8058256" />
+
+Vein pyynnön requesteriin ja vaihdon tiedoston sijainniksi filename-parametrissa /etc/passwd. Lähetin pyynnön ja vastauksena tuli palvelimen /etc/passwd.
+
+<img width="1319" height="534" alt="image" src="https://github.com/user-attachments/assets/ebd18e84-da84-4b3e-b234-0801a3c141f0" />
+
+Samalla sain labran suoritettua.
 
 #### h) File path traversal, traversal sequences stripped non-recursively
+
+Lab: https://portswigger.net/web-security/file-path-traversal/lab-sequences-stripped-non-recursively, tavoitteena saada `/etc/passwd` tiedoston sisältö.
+
+Vaihdoin FoxyProxyn filtterin uuten sivustoon. Harjoitus oli samanlainen kuin kaksi edellistä.
+
+Labran kuvauksessa kerrotaan, että palvelin poistaa käyttäjän pyyntämästä tiedostopolusta path traversaliin viittavaat merkkijonot, eli "../" -> "". Tämä voidaan ottaa huomioon pyyntöä luotaessa niin, että luodaan merkkijono joka muodostaa path traversalin, kun siitä poistetaan path traversaliin viittaavat merkkijonot. Käytännössä siis "....//" -> "../", jota muokkaamalla saadaan "....//....//....//....//etc/passwd" -> "../../../../etc/passwd". (https://portswigger.net/web-security/file-path-traversal#common-obstacles-to-exploiting-path-traversal-vulnerabilities)
+
+Hain ZAPissa pyynnön kuvasta ja vein sen requesteriin. Requesterissa muutin filename-parametriin ylemmän esimerkin mukaisen merkkijonon ja lähetin pyynnön.
+
+<img width="1318" height="538" alt="image" src="https://github.com/user-attachments/assets/c6d2ba95-059a-4b12-800f-18ad38b681c8" />
+
+Tämä meni läpi ja sain /etc/passwd sisällön ja samalla labran läpi.
 
 ### Insecure Direct Object Reference (IDOR)
 
 #### i) Insecure direct object references
+
+Lab: https://portswigger.net/web-security/access-control/lab-insecure-direct-object-reference, "This lab stores user chat logs directly on the server's file system, and retrieves them using static URLs. Solve the lab by finding the password for the user carlos, and logging into their account."
+
+Vaihdoin FoxyProxyssä filterin labraan. Avasin labran ja siirryin sivuston chattiin.
+
+<img width="1226" height="892" alt="image" src="https://github.com/user-attachments/assets/22e379e4-445f-41cd-bb90-3e8723851425" />
+
+Chatissa oli "View transcript" nappi, jota painamalla sai ladattua viestit tekstitiedostona. Latailin muutaman kerran viesti, joista ensiksi ladattiin 2.txt, toiseksi 3.txt jne.
+
+<img width="492" height="202" alt="image" src="https://github.com/user-attachments/assets/31d3f985-1185-4f4f-8bce-61dc8284d33e" />
+
+Arvasin, että 1.txt tiedosto voisi sisältää mielenkiintoista tekstiä, jos sen saisi ladattua.
+
+Etsin ZAPilla pyynnön 2.txt tiedostosta ja vein sen requesteriin. Requesterissa vaihdoin 2.txt paikalle 1.txt ja lähetin pyynnön.
+
+<img width="1317" height="738" alt="image" src="https://github.com/user-attachments/assets/0a99ace6-9c1d-45bd-b3a1-38b0c01a49bb" />
+
+Pyyntö meni läpi ja vastauksena tuli 1.txt. Tiedostosta löytyi yksi salasana, joka todennäköisesti kuuluu Carlosille.
+
+Syötin kirjautumissivulle käyttäjätunnuksen carlos ja salasanan 12ee1ib79e0rc29k83z6.
+
+<img width="1178" height="499" alt="image" src="https://github.com/user-attachments/assets/3e84df9f-0241-4282-82c6-1f90fcee0332" />
+
+Tunnukset olivat oikein ja sain labran suoritettua.
+
+<img width="1230" height="502" alt="image" src="https://github.com/user-attachments/assets/9978b1d3-30b9-4e84-b094-effc655ad8c2" />
+
+## Lähteet
+
