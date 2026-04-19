@@ -83,7 +83,7 @@ Lisäsin proxyyn patternin proxyasetusten alta. Laitoin sen lähettämään vain
 <img width="878" height="284" alt="image" src="https://github.com/user-attachments/assets/
 ca940e40-5754-4c52-a148-b10082065fae" />
 
-Asetin Foxyproxyssä päälle klikkaamalla "Proxy by Patterns".
+Asetin patternit päälle klikkaamalla "Proxy by Patterns".
 
 Loin ZAPissa uuden session, ja selailin kurssivulla, sekä muilla verkkosivuilla kuten githubissa. Tarkastin ZAPin ja se näytti vain pyynnöt jotka kuuluivat filtteriin, joten filtteri toimii.
 
