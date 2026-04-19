@@ -80,8 +80,7 @@ Kun FoxyProxy oli selaimessa, avasin sen asetukset kohtaan "Proxies" ja lisäsin
 
 Lisäsin proxyyn patternin proxyasetusten alta. Laitoin sen lähettämään vain kurssisivun, sekä kurssisivun alla olevat resurssit ZAPiin.
 
-<img width="878" height="284" alt="image" src="https://github.com/user-attachments/assets/
-ca940e40-5754-4c52-a148-b10082065fae" />
+<img width="878" height="284" alt="image" src="https://github.com/user-attachments/assets/ca940e40-5754-4c52-a148-b10082065fae" />
 
 Asetin patternit päälle klikkaamalla "Proxy by Patterns".
 
