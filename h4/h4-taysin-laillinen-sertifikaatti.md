@@ -91,7 +91,7 @@ Loin ZAPissa uuden session, ja selailin kurssivulla, sekä muilla verkkosivuilla
 
 ## PortSwigger Labs. Ratkaise tehtävät. Selitä ratkaisusi: mitä palvelimella tapahtuu, mitä eri osat tekevät, miten hyökkäys löytyi, mistä vika johtuu.
 
-Ennen tehtäviä loin tunnukset PortSwiggeriin päästäkseni käsiksi labeihin.
+Ennen tehtäviä loin tunnukset PortSwiggeriin päästäkseni käsiksi labroihin.
 
 ### Cross Site Scripting (XSS)
 
@@ -99,7 +99,7 @@ Ennen tehtäviä loin tunnukset PortSwiggeriin päästäkseni käsiksi labeihin.
 
 Lab: https://portswigger.net/web-security/cross-site-scripting/reflected/lab-html-context-nothing-encoded
 
-Labi sisältää blogisivuston, joka näyttää sisältävän muumataman artikkelin, sekä hakukentän. Artikkeleita on myös mahdollista kommentoida. Keskityin heti aluksi hakukenttään ja kokeilin sen toiminnallisuutta. Hain sanaa "history".
+Labra sisältää blogisivuston, joka näyttää sisältävän muumataman artikkelin, sekä hakukentän. Artikkeleita on myös mahdollista kommentoida. Keskityin heti aluksi hakukenttään ja kokeilin sen toiminnallisuutta. Hain sanaa "history".
 
 <img width="787" height="941" alt="image" src="https://github.com/user-attachments/assets/ac9c7394-29fc-4374-8ed4-b42545f26ed6" />
 
@@ -115,13 +115,13 @@ XSS onnistui.
 
 Lab: https://portswigger.net/web-security/cross-site-scripting/stored/lab-html-context-nothing-encoded
 
-Samantyylinen blogisivusto avautui, kuin edellisessä labissa, mutta ilman hakukenttää. Lähdin heti testaamaan kommentointia, sillä haavoittuvaisena se voi johtaa stored XSS:ään. Kommentit lisätään sivuston tietokantaan, josta ne tarjoillaan kävijoille.
+Samantyylinen blogisivusto avautui, kuin edellisessä labrassa, mutta ilman hakukenttää. Lähdin heti testaamaan kommentointia, sillä haavoittuvaisena se voi johtaa stored XSS:ään. Kommentit lisätään sivuston tietokantaan, josta ne tarjoillaan kävijoille.
 
 Lähetin yhteen artikkeleista kommentin, jonka tekstikenttään lisäsin XSS payloadin.
 
 <img width="741" height="622" alt="image" src="https://github.com/user-attachments/assets/8143e31b-2dc1-402e-a868-cd6ba1d363c8" />
 
-Lähetin kommentin ja sain labin läpi.
+Lähetin kommentin ja sain labran läpi.
 
 <img width="1225" height="438" alt="image" src="https://github.com/user-attachments/assets/5807557a-8b9f-43d1-9e09-4226f1dbbf1f" />
 
@@ -143,11 +143,11 @@ Yleisimmin XSS-hyökkäystä hyödynnetään keksien, salasanojen ja CSRF-tokeni
 
 Lab: https://portswigger.net/web-security/file-path-traversal/lab-simple, tavoitteena saada `/etc/passwd` tiedoston sisältö.
 
-Laitoin ZAPin päälle, sekä FoxyProxyn näyttämään vain labiin kuuluvat pyynnöt.
+Laitoin ZAPin päälle, sekä FoxyProxyn näyttämään vain labraan kuuluvat pyynnöt.
 
 <img width="1140" height="72" alt="image" src="https://github.com/user-attachments/assets/d300819f-9ddd-4813-857e-dd66989bd780" />
 
-Labi sisälsi kaupan, jossa oli erilaisia tuotteita.
+Labra sisälsi kaupan, jossa oli erilaisia tuotteita.
 
 <img width="1276" height="1014" alt="image" src="https://github.com/user-attachments/assets/331a29e0-0d69-41e0-b86a-c52287cb10f9" />
 
@@ -173,7 +173,7 @@ Muutin pyyntöä vaihtamalla "matkustamalla" /etc/passwd tiedostoon. Lähetin py
 
 <img width="1319" height="531" alt="image" src="https://github.com/user-attachments/assets/bc2c1be5-c3da-42d7-8008-219a8d8a7a6e" />
 
-Siirryin selaimella labiin joka ilmoitti sen suoritetuksi.
+Siirryin selaimella labraan joka ilmoitti sen suoritetuksi.
 
 #### g) File path traversal, traversal sequences blocked with absolute path bypass
 
