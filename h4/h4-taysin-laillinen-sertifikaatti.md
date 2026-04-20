@@ -108,7 +108,7 @@ Lisäsin hakukenttään seuraavan HTML:n `<script>alert("hello world")</script>`
 
 <img width="1223" height="939" alt="image" src="https://github.com/user-attachments/assets/e5d110de-faef-42a9-9c84-324f8330d8e3" />
 
-XSS onnistui. Hakemani teksti lisättiin sellaisenaan lisättiin sivulle, jolloin selaimen ladatessa sivun se näkee script-tagien sisällä olevan tekstin JavaScript-koodina ja ajaa sen.
+XSS onnistui. Hakemani teksti lisättiin sellaisenaan sivulle, jolloin selaimen ladatessa sivun se näkee script-tagien sisällä olevan tekstin JavaScript-koodina ja ajaa sen.
 
 #### d) Stored XSS into HTML context with nothing encoded
 
