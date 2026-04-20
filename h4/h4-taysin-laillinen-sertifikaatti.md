@@ -176,6 +176,8 @@ Muutin pyyntöä vaihtamalla "matkustamalla" /etc/passwd tiedostoon. Lähetin py
 
 Siirryin selaimella labraan joka ilmoitti sen suoritetuksi.
 
+Path traversal toimii, sillä ohjelma syöttää käyttäjän antaman merkkijonon käyttöjärjestelmälle tarkistamatta, että lopullinen tiedosto sijaitsee sallitussa hakemistossa. Ohjelma ei myöskään suodata merkkijonosta kielletty merkkejä. Myös konfiguraatiossa voi olla ongelmia, koska ohjelma pääsee lukemaan tiedostoja jotka tyypillisesti tarvitsevat sudo-oikeudet. Täten myöskään vähimmäisten oikeuksien periaate ei täyty.
+
 #### g) File path traversal, traversal sequences blocked with absolute path bypass
 
 Lab: https://portswigger.net/web-security/file-path-traversal/lab-absolute-path-bypass, tavoitteena saada `/etc/passwd` tiedoston sisältö.
