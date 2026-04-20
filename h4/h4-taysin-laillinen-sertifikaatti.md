@@ -108,7 +108,7 @@ Lisäsin hakukenttään seuraavan HTML:n `<script>alert("hello world")</script>`
 
 <img width="1223" height="939" alt="image" src="https://github.com/user-attachments/assets/e5d110de-faef-42a9-9c84-324f8330d8e3" />
 
-XSS onnistui.
+XSS onnistui. Hakemani teksti lisättiin sellaisenaan lisättiin sivulle, jolloin selaimen ladatessa sivun se näkee script-tagien sisällä olevan tekstin JavaScript-koodina ja ajaa sen.
 
 #### d) Stored XSS into HTML context with nothing encoded
 
@@ -124,9 +124,11 @@ Lähetin kommentin ja sain labran läpi.
 
 <img width="1225" height="438" alt="image" src="https://github.com/user-attachments/assets/5807557a-8b9f-43d1-9e09-4226f1dbbf1f" />
 
-Kun kommentoimani artikkelin avasi tuli ensiksi näkyviin alert.
+Kun kommentoimani artikkelin avasi tuli näkyviin alert.
 
 <img width="740" height="272" alt="image" src="https://github.com/user-attachments/assets/3c08f9a1-e58f-454a-8eab-ca0b6f5a5b46" />
+
+Perustelu haavoittuvuudelle on sama, kuin edellisessä kohdassa. Tällä kertaa vaikutus voi olla suurempi, sillä JavaScript ajetaan kaikkien käyttäjien selaimessa, jotka lataavat kommentin.
 
 #### e) Selitä esimerkin avulla, mitä hyökkääjä hyötyy XSS-hyökkäyksestä. Alert("Hei Tero!") ei vielä tarjoa kummoista pääsyä.
 
