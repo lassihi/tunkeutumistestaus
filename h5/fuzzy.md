@@ -30,7 +30,7 @@ Varmistin, että lataus onnistui tulostamalla ffufin version.
 <img width="221" height="61" alt="image" src="https://github.com/user-attachments/assets/950e12ed-81a7-4a94-88ea-ce2ce215acc4" />
 
 
-Latasin dirfuz-1 binäärin ja ajoin sen ohjeiden mukaisesti:
+Latasin dirfuz-1 binäärin ja ajoin sen artikkelin https://terokarvinen.com/2023/fuzz-urls-find-hidden-directories/ ohjeiden mukaisesti:
 
 ```
 wget https://terokarvinen.com/2023/fuzz-urls-find-hidden-directories/dirfuzt-1
@@ -184,6 +184,27 @@ Fuzzauksen ajaminen kesti huomattavasti pidempään normaaliin verrattuna (1 min
 
 <img width="830" height="483" alt="image" src="https://github.com/user-attachments/assets/66656068-3a96-40c6-8fd2-3c2be3758956" />
 
+Alidomaineja on myös mahdollista fuzzata ffufilla. Tehtävässä fuzzataan alidomaineja pyynnön Host headerista ja sitä kautta mahdollisesti saadaan tietoa eri virtual hosteista kohteessa.
+
+`ffuf -w ../subdomains.txt -H "Host: FUZZ.fuff.me" -u http://localhost`
+* `-H`: Headerit pilkulla eroteltuna. (man ffuf)
+
 <img width="803" height="897" alt="image" src="https://github.com/user-attachments/assets/c57c620b-e7a8-470d-a141-7dfd6f23b0ca" />
 
+Ajoin fuzzauksen ja jokaisen virtual hostin kohdalla palautettiin koodi 200, eli pyyntö onnistui. Oikean virtual hostin löytämiseksi suodatettiin jälleen pois oletusvastauksen koko, `-fs 1495`.
+
 <img width="759" height="449" alt="image" src="https://github.com/user-attachments/assets/36dde095-9570-44ba-b1cf-b3918dd11a7c" />
+
+Suodatus toimi ja fuzzauksen avulla löydettiin `redhat.fuff.me`
+
+# Lähteet
+
+Karvinen 2026: Fuzzy: https://terokarvinen.com/tunkeutumistestaus/#h5-fuzzy
+
+Hoikkala 2023: ffuf README.md: https://github.com/ffuf/ffuf/blob/master/README.md
+
+Karvinen 2023: Find Hidden Web Directories - Fuzz URLs with ffuf: https://terokarvinen.com/2023/fuzz-urls-find-hidden-directories/
+
+Karvinen 2023: Fuffme - Install Web Fuzzing Target on Debian: https://terokarvinen.com/2023/fuffme-web-fuzzing-target-debian/ 
+
+`man ffuf`
