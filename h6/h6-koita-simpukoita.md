@@ -1,6 +1,6 @@
 # Harjoitus 6: Koita simpukoita
 
-Kurssi: https://terokarvinen.com/tunkeutumistestaus/ 
+Kurssi: https://terokarvinen.com/tunkeutumistestaus/ \
 Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h6-koita-simpukoita
 
 ## a) Venom. Tee msfvenom-työkalulla haittaohjelma, joka soittaa kotiin (reverse shell). Ota yhteys vastaan metasploitin multi/handler -työkalulla.
@@ -114,4 +114,18 @@ Reverse shell yhteys on nyt aktiivinen ja käynnistin wiresharkin, `wireshark`. 
 Filtteröin vielä wiresharkin näyttämään vain tcp-protokollan.
 
 <img width="1543" height="482" alt="image" src="https://github.com/user-attachments/assets/f28ce57a-88f9-4e48-b7bd-53652bbac248" />
+
+Kuvan paketit 4-8 ovat meterpreter komennon `sysinfo` aiheittamia, mutta muut ovat meterpreter yhteyden automaattisesti luomia.
+
+Tunnistuksen kannalta olennaista on meterpreterin oletusportti 4444, joka toimii kuuntelevana porttina hyökkääjän koneella. Lisäksi todennäköisesti noin 60 sekunnin välein tapahtuva keepalive, sekä PSH-ACK, PSH-ACK, ACK kaava. Pakettien koko auttaa myös reverse shellin tunnistamisessa (https://www.cyberbit.com/endpoint-security/detecting-reverse-shell-with-machine-learning/).
+
+Harjaantumattomalle silmällä itse TCP-pakettien sisällöstä ei löytynyt paljoaakaan tunnistettavaa tietoa.
+
+<img width="1919" height="712" alt="image" src="https://github.com/user-attachments/assets/9b67fd9a-7c7b-4f0d-83b7-4cf308fee2f1" />
+
+Käyttämäni meterpreter reverse tcp payloadin liikenne ei ole salattua, mutta se lähetetään kuitenkin binäärinä. Olen suhteellisen varma, että tälle liikenteelle on mahdollista rakentaa tunnistus.
+
+Tunnistukselta välttämiseksi aloittaisin luomalla msfvenomilla uuden payloadin, mutta enkoodattuna `-e` useaan kertaan `-i`. Tämä obfuskoi ohjelman ja tekee sen havaitsemisesta kohdekoneella vaikeamman. (https://medium.com/@mahmoudmsallam2002/persistence-technique-and-detection-with-splunk-f174db7bdb94). Käyttäisin reverse tcp payloadin sijasta esimerkiksi reverse https payloadia, jolloin liikenteen sisältö on salattua. Oletusportin 4444 vaihtaminen voi myös auttaa tunnistuksen välttämisessä.
+
+## c) Hello, Sliver. Näytä esimerkki http-yhteydestä Sliverillä.
 
