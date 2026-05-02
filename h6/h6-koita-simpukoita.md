@@ -129,3 +129,5 @@ Tunnistukselta välttämiseksi aloittaisin luomalla msfvenomilla uuden payloadin
 
 ## c) Hello, Sliver. Näytä esimerkki http-yhteydestä Sliverillä.
 
+Sliver on Command and Control (C2) viitekehys, joka koostuu sliver-serveristä ja sliver-clientista. Sliver-server on palvelin, johon clientit ja kohteet yhdistävät. Sliver-client on operaattorin, eli hyökkääjän komentorivityökalu, jolla ohjataan palvelinta ja kohteita. Implantit ovat sliverin payloadeja, jotka yhdistävät sliver-serveriin. (https://sliver.sh/tutorials/?name=1+-+Getting+Started)
+
