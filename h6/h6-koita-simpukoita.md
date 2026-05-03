@@ -309,7 +309,7 @@ Kun tämän sormenjäljen googlaa, tekoäly osaa suoraan liittää sen mahdollis
 
 <img width="1278" height="725" alt="image" src="https://github.com/user-attachments/assets/e78ba6b3-75df-4734-835e-2878e21ad004" />
 
-Sliver palvelimen JA3 sormenjälki on tunnistettavissa.
+Sliver palvelimen JA3 sormenjälki on siis tunnistettavissa. Tutkin myös implantin JA3 sormenjälkeä, mutta sille ei löytynyt verkosta tunnistusta.
 
 Huomasin myös, että palvelin ja kohde vaihtavat tietoa noin joka kahdes sekunti. Alla olevassa kuvassa tämä kaava toistuu kahdesti.
 
