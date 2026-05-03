@@ -305,8 +305,12 @@ Kun tämän sormenjäljen googlaa, tekoäly osaa suoraan liittää sen mahdollis
 
 Sliver palvelimen JA3 sormenjälki on tunnistettavissa.
 
-Huomasin myös, että palvelin ja kohde vaihtavat tietoa joka kahdes sekunti. Alla olevassa kuvassa tämä kaava toistuu kahdesti.
+Huomasin myös, että palvelin ja kohde vaihtavat tietoa noin joka kahdes sekunti. Alla olevassa kuvassa tämä kaava toistuu kahdesti.
 
 <img width="2107" height="344" alt="image" src="https://github.com/user-attachments/assets/672a43fc-d7f8-44e0-8f8d-a1029a3034ee" />
 
-Ensiksi palvelin lähettää kohteelle 204 tavun pituisen paketin, johon kohde vastaa noin 350-380 tavua pitkällä paketilla ja lopuksi palvelin lähettää kohteelle TCP ACK-viestin.
+Ensiksi palvelin lähettää kohteelle 204 tavun pituisen paketin, johon kohde vastaa noin 350-380 tavua pitkällä paketilla ja lopuksi palvelin lähettää kohteelle TCP ACK-viestin. Tämä kaava voi olla mahdollista tunnistaa.
+
+## e) Sliverillä voit muuttaa yhteyden ominaisuuksia. Kokeile ja näytä esimerkki. Muista todeta testein, että muutokset toimivat.
+
+
