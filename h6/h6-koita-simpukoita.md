@@ -123,7 +123,7 @@ Kuvan paketit 4-8 ovat meterpreter komennon `sysinfo` aiheittamia, mutta muut ov
 
 Tunnistuksen kannalta olennaista on meterpreterin oletusportti 4444, joka toimii kuuntelevana porttina hyökkääjän koneella. Lisäksi todennäköisesti noin 60 sekunnin välein tapahtuva keepalive, sekä PSH-ACK, PSH-ACK, ACK kaava. Pakettien koko auttaa myös reverse shellin tunnistamisessa (https://www.cyberbit.com/endpoint-security/detecting-reverse-shell-with-machine-learning/).
 
-Harjaantumattomalle silmällä itse TCP-pakettien sisällöstä ei löytynyt paljoaakaan tunnistettavaa tietoa.
+Harjaantumattomalle silmälle itse TCP-pakettien sisällöstä ei löytynyt paljoaakaan tunnistettavaa tietoa.
 
 <img width="1919" height="712" alt="image" src="https://github.com/user-attachments/assets/9b67fd9a-7c7b-4f0d-83b7-4cf308fee2f1" />
 
@@ -135,7 +135,7 @@ Tunnistukselta välttämiseksi aloittaisin luomalla msfvenomilla uuden payloadin
 
 Sliver on Command and Control (C2) viitekehys, joka koostuu sliver-serveristä ja sliver-clientista. Sliver-server on palvelin, johon clientit ja kohteet yhdistävät. Sliver-client on operaattorin, eli hyökkääjän komentorivityökalu, jolla ohjataan palvelinta ja kohteita. Implantit ovat sliverin payloadeja, jotka yhdistävät sliver-serveriin. (https://sliver.sh/tutorials/?name=1+-+Getting+Started)
 
-Yhdistin taas kalin verkkoon ja asensin sliverin käyttäen sliverin GitHubissa ollutta asennus-skriptiä, `curl https://sliver.sh/install|sudo bash`.
+Yhdistin taas kalin verkkoon ja asensin sliverin käyttäen GitHubissa olevaa asennus-skriptiä, `curl https://sliver.sh/install|sudo bash`.
 
 Poistin kalin taas verkosta network managerin kautta.
 
@@ -319,7 +319,7 @@ Ensiksi palvelin lähettää kohteelle 204 tavun pituisen paketin, johon kohde v
 
 ## e) Sliverillä voit muuttaa yhteyden ominaisuuksia. Kokeile ja näytä esimerkki. Muista todeta testein, että muutokset toimivat.
 
-Session yhteyksiin käytetään yhtä TCP-yhteyttä koko session ajan, kun taas beacon yhteyksissä kohde ottaa yhteyden palvelimeen tietyin välein. Beaconeilla on mahdollista muokata tätä aikaväli jälkikäteen. (https://sliver.sh/tutorials/?name=2+-+Beacons+vs+Sessions). Sessioiden osalta en dokumentaatiosta löytänyt kuinka aktiivisen implantin yhteyden ominaisuuksia on mahdollista muokata, jos näitä ominaisuuksia ei ole luontivaiheessa implanttiin sisäänrakennettu. Implantin luontivaiheessa yhteyttä on mahdollista muokata aina protokollista, niiden käyttäytymiseen, endpointeihin ja sertifikaatteihin (https://sliver.sh/docs/?name=C2+Advanced+Options).
+Session yhteyksiin käytetään yhtä TCP-yhteyttä koko session ajan, kun taas beacon yhteyksissä kohde ottaa yhteyden palvelimeen tietyin välein. Beaconeilla on mahdollista muokata tätä  jälkikäteen. (https://sliver.sh/tutorials/?name=2+-+Beacons+vs+Sessions). Sessioiden osalta en dokumentaatiosta löytänyt kuinka aktiivisen implantin yhteyden ominaisuuksia on mahdollista muokata, jos näitä ominaisuuksia ei ole luontivaiheessa implanttiin sisäänrakennettu. Implantin luontivaiheessa yhteyttä on mahdollista muokata aina protokollista, niiden käyttäytymiseen, endpointeihin ja sertifikaatteihin (https://sliver.sh/docs/?name=C2+Advanced+Options).
 
 Beaconin yhteyden muokkaamisen testaamiseksi generoin beacon implantin.
 
@@ -365,7 +365,7 @@ Muokkasin check-in aikaa, sekä jitteriä `reconfig`-komennolla.
 [*] Reconfigured beacon
 ```
 
-Muutosten jälkeen sliver ilmoitti check-in väliksi noin 1000 sekuntia eli noin 17 minuutia vanhan 60 sekuntin sijaan.
+Muutosten jälkeen sliver ilmoitti check-in väliksi 1000 sekuntia eli noin 17 minuutia vanhan 60 sekuntin sijaan.
 
 <img width="1023" height="94" alt="image" src="https://github.com/user-attachments/assets/db222331-bbfd-4338-a7a6-1ff53c879f14" />
 
@@ -409,4 +409,22 @@ drwxrwxr-x  lassi:lassi  .               <dir>     Sun May 03 18:43:20 +0300 202
 
 <img width="705" height="319" alt="image" src="https://github.com/user-attachments/assets/68a23149-82ce-4952-9b71-2ee67fbb7f1a" />
 
-Muita mielenkiintoisia komentoja ovat `msf` ja `msf-inject` mahdollistavat metasploit hyötykuormien ajon kohteessa. `cursed` mahdollistaa selainten ja selainpohjaisten sovellusten debuggaamisen, jonka avulla voidaan kaapata esimerkiksi keksejä.
+Muita mielenkiintoisia komentoja ovat `msf` ja `msf-inject`, jotka mahdollistavat metasploit hyötykuormien ajon kohteessa. `cursed` mahdollistaa selainten ja selainpohjaisten sovellusten debuggaamisen, jonka avulla voidaan kaapata esimerkiksi keksejä.
+
+## Lähteet
+
+Karvinen 2026: Koita simpukoita: https://terokarvinen.com/tunkeutumistestaus/#h6-koita-simpukoita
+
+Beale 2022: How to Use Metasploit Meterpreter for Command & Control: Step-by-step: https://www.beyondtrust.com/blog/entry/how-to-use-metasploit-for-command-control
+
+Zabar 2018: Detecting Reverse Shell with Machine Learning: https://www.cyberbit.com/endpoint-security/detecting-reverse-shell-with-machine-learning/
+
+Msallam 2025: Persistence Technique and Detection with Splunk: https://medium.com/@mahmoudmsallam2002/persistence-technique-and-detection-with-splunk-f174db7bdb94
+
+Sliver: 1 - Getting Started: https://sliver.sh/tutorials/?name=1+-+Getting+Started
+
+Sliver: Payload Compatibility: https://sliver.sh/docs/?name=Payload+Compatibility
+
+Sliver: Beacons vs Sessions: https://sliver.sh/tutorials/?name=2+-+Beacons+vs+Sessions
+
+Sliver: C2 Advanced Options: https://sliver.sh/docs/?name=C2+Advanced+Options
