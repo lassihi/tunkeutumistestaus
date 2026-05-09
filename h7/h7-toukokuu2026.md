@@ -240,7 +240,7 @@ Did you know that Jumbo John can handle many other file formats, too [1]?
 
 Tämä toimi.
 
-## e) Tiedosto. Tee itse tai etsi verkosta jokin salakirjoitettu tiedosto, jonka saat auki. Murra sen salaus. (Jokin muu formaatti kuin aiemmissa alakohdissa kokeilemasi).
+## c) Tiedosto. Tee itse tai etsi verkosta jokin salakirjoitettu tiedosto, jonka saat auki. Murra sen salaus. (Jokin muu formaatti kuin aiemmissa alakohdissa kokeilemasi).
 
 Päätin luoda 7z-tiedoston. 7z on zipin kaltainen tiedon kompressointiin käytetty työkalu.
 
@@ -351,3 +351,118 @@ Session completed
 Pääasiallinen syy pitkälle murtamisajalle johtui siitä, että iteraatioiden määrä on 524288, "`Cost 1 (iteration count) is 524288 for all loaded hashes`". Käytännössä siis yhden salasanan arvaukseen sha256 tiiviste joudutaan laskemaan 524 288 kertaa. (https://hashcat.net/forum/thread-8905.html). Kaava, jolla itse tämän ymmärsin: `sha256(salasana+salt)=vastaus1, sha256(vastaus1)=vastaus2 ... sha256(vastaus524287)=Lopullinen tiiviste`. Virallisesti kyseessä on "Key derivation function" ja tarkemmin "Key stretching" (https://en.wikipedia.org/wiki/Key_derivation_function#Key_stretching_and_key_strengthening). Tästä syystä arvauksien nopeus oli vain 39.19/s. Tämä on 7z:n sisään leivottu puolustus salasanan arvauksia vastaan (https://www.7-zip.org/7z.html).
 
 Toinen syy pitkälle murtamisajalle johtui siitä, että John ajoi aluksi "single crack" moden, joka automaattisesti loi salasana-arvauksia itse 7z tiedoston tietojen perusteella. (https://jumpcloud.com/it-index/what-is-john-the-ripper). Esimerkiksi: tiedosto secret.7z -> testataan "sssecret", "Secretsecret.7z1994"...
+
+Oikean salasanan löydyttyä 7z tiedosto aukesi.
+
+<img width="638" height="475" alt="image" src="https://github.com/user-attachments/assets/b0459688-1279-4d44-8266-0969817927d8" />
+
+## f) Tiiviste. Tee itse tai etsi verkosta salasanan tiiviste, jonka saat auki. Murra sen salaus. (Jokin muu formaatti kuin aiemmissa alakohdissa kokeilemasi. Voit esim. tehdä käyttäjän Linuxiin ja murtaa sen salasanan.)
+
+Testasin Linux käyttäjän salasanan murtamista. Aloitin luomalla uuden käyttäjän "tunktest", jolle annoin salasanan "skyscraper".
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ sudo adduser tunktest 
+New password: 
+Retype new password: 
+passwd: password updated successfully
+Changing the user information for tunktest
+Enter the new value, or press ENTER for the default
+        Full Name []: 
+        Room Number []: 
+        Work Phone []: 
+        Home Phone []: 
+        Other []: 
+Is the information correct? [Y/n] 
+```
+
+Tarkistin, että käyttäjä ja salasanatiiviste luotiin `/etc/shadow` tiedostosta.
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ sudo cat /etc/shadow |grep tunktest
+tunktest:$y$j9T$R6gWIhBAdtwhPiqNM4UvD/$L9JHbn8pR5F11I5k56l7a7/aXdRbTqp5ZshQRYFN53/:20582:0:99999:7:::
+```
+
+Sisältö:
+* `tunktest`: käyttäjä
+* `$y$j9T$R6gWIhBAdtwhPiqNM4UvD/$L9JHbn8pR5F11I5k56l7a7/aXdRbTqp5ZshQRYFN53/`: $id$salt$hashed
+  * id: algorytmin id, `$y$`=yescrypt
+* Loput kertovat koska viimeksi salasana vaihdettu, vähimmäisaika vaihtojen välissä, enimmäisaika vaihtojen välissä, vaihtovaroituksen ajankohta, kuinka pitkään käyttäjä on aktiivinen salasanan vanhennuttua ja koska käyttäjä vanhenee.
+
+(https://www.cyberciti.biz/faq/understanding-etcshadow-file/)
+
+Yescrypt on myös KDF:n (Key derivation function) avulla arvauksilta suojattu algoritmi, joten sen kanssa en lähtenyt viettämään iltaa (https://www.openwall.com/yescrypt/).
+
+Päätin suoraan simuloida kaapattua MD5 salasanatiivistettä luomalla `mkpasswd` komennolla tiivisteen salasanasta "skyscraper". Lisäsin `tunktest.hash` tiedostoon uuden tiivisteen.
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ mkpasswd -m md5
+Password: 
+$1$NUJzMWUg$unzMudoyr7cQD5vf4KTr60
+
+┌──(lassi㉿lika)-[~/crackd]
+└─$ echo '$1$NUJzMWUg$unzMudoyr7cQD5vf4KTr60' > tunktest.hash
+```
+
+Aioin murtaa salasanan hashcatilla, joten ajoin `hashid` komennon `-m` flagilla saadakseni oikean moden.
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ hashid -m tunktest.hash
+--File 'tunktest.hash'--
+Analyzing '$1$NUJzMWUg$unzMudoyr7cQD5vf4KTr60'
+[+] MD5 Crypt [Hashcat Mode: 500]
+[+] Cisco-IOS(MD5) [Hashcat Mode: 500]
+[+] FreeBSD MD5 [Hashcat Mode: 500]
+--End of file 'tunktest.hash'--
+```
+
+Hashid näytti oikealta, tunnisti MD5:n ja antoi modeksi 500. Käytin tätä modea salasanan murtamisessa.
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ hashcat -m 500 tunktest.hash /usr/share/wordlists/rockyou.txt -o solved
+...
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 500 (md5crypt, MD5 (Unix), Cisco-IOS $1$ (MD5))
+Hash.Target......: $1$NUJzMWUg$unzMudoyr7cQD5vf4KTr60
+Time.Started.....: Sat May  9 21:47:44 2026 (7 secs)
+Time.Estimated...: Sat May  9 21:47:51 2026 (0 secs)
+Kernel.Feature...: Pure Kernel (password length 0-256 bytes)
+Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#01........:    20408 H/s (13.02ms) @ Accel:34 Loops:1000 Thr:1 Vec:8
+Recovered........: 1/1 (100.00%) Digests (total), 1/1 (100.00%) Digests (new)
+Progress.........: 145792/14344385 (1.02%)
+Rejected.........: 0/145792 (0.00%)
+Restore.Point....: 145520/14344385 (1.01%)
+Restore.Sub.#01..: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidate.Engine.: Device Generator
+Candidates.#01...: sprite12 -> shaneil
+Hardware.Mon.#01.: Temp: 68c Util: 77%
+
+Started: Sat May  9 21:47:42 2026
+Stopped: Sat May  9 21:47:53 2026
+```
+
+Salasana löytyi 9 sekunnissa. Tarkistin solved-tiedoston.
+
+<img width="382" height="56" alt="image" src="https://github.com/user-attachments/assets/a4ca2ecc-610f-4088-b435-eb6ce3c990e9" />
+
+Salasana on oikein. Annoin vielä MD5 tiivisteen tunktest käyttäjän salasanatiivisteeksi ja katsoin pääsenkö hashcatin antamalla salasanalla sisään:
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ sudo usermod -p '$1$NUJzMWUg$unzMudoyr7cQD5vf4KTr60' tunktest
+
+┌──(lassi㉿lika)-[~/crackd]
+└─$ su tunktest
+Password: 
+┌──(tunktest㉿lika)-[/home/lassi/crackd]
+└─$ whoami
+tunktest
+```
+
+Pääsin sisään, joten hyökkäys toimisi myös oikeassa järjestelmässä.
