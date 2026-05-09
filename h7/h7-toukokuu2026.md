@@ -346,4 +346,8 @@ Use the "--show" option to display all of the cracked passwords reliably
 Session completed
 ```
 
-4m 11s jälkeen oikea salasana "12345" löydettiin. Tässä kesti yllättävän pitkään, sillä kyseessä oli hyvin helppo salasana. 
+4m 11s jälkeen oikea salasana "12345" löydettiin. Tässä kesti yllättävän pitkään, sillä kyseessä oli hyvin helppo salasana. Lähdin tutkimaan mistä kesto johtui.
+
+Pääasiallinen syy pitkälle murtamisajalle johtui siitä, että iteraatioiden määrä on 524288, "`Cost 1 (iteration count) is 524288 for all loaded hashes`". Käytännössä siis yhden salasanan arvaukseen sha256 tiiviste joudutaan laskemaan 524 288 kertaa. (https://hashcat.net/forum/thread-8905.html). Kaava, jolla itse tämän ymmärsin: `sha256(salasana+salt)=vastaus1, sha256(vastaus1)=vastaus2 ... sha256(vastaus524287)=Lopullinen tiiviste`. Virallisesti kyseessä on "Key derivation function" ja tarkemmin "Key stretching" (https://en.wikipedia.org/wiki/Key_derivation_function#Key_stretching_and_key_strengthening). Tästä syystä arvauksien nopeus oli vain 39.19/s. Tämä on 7z:n sisään leivottu puolustus salasanan arvauksia vastaan (https://www.7-zip.org/7z.html).
+
+Toinen syy pitkälle murtamisajalle johtui siitä, että John ajoi aluksi "single crack" moden, joka automaattisesti loi salasana-arvauksia itse 7z tiedoston tietojen perusteella. (https://jumpcloud.com/it-index/what-is-john-the-ripper). Esimerkiksi: tiedosto secret.7z -> testataan "sssecret", "Secretsecret.7z1994"...
