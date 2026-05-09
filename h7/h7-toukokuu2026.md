@@ -465,4 +465,6 @@ Password:
 tunktest
 ```
 
-Pääsin sisään, joten hyökkäys toimisi myös oikeassa järjestelmässä.
+Pääsin sisään, joten hyökkäys toimisi myös oikeassa järjestelmässä kaapatuilla salasanatiivisteillä.
+
+## g) Sanakirja. Oman sanakirjan teko parantaa onnistumismahdollisuuksia. Demonstroi, kuinka teet oman sanakirjan hashcat:n tai john:iin.
