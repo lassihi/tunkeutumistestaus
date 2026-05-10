@@ -471,7 +471,7 @@ Pääsin sisään, joten hyökkäys toimisi myös oikeassa järjestelmässä kaa
 
 Sanakirjat ovat tiedostoja, jotka sisältävät sanoja eroteltuna toisistaan rivinvaihdolla. Sanalistojen luontiin löytyy monta eri lähestymistapaa. Yksi tapa on käyttää sanalistojen luontiin ohjelmaa, kuten [Crunch](https://www.kali.org/tools/crunch/). Crunch tuli omassa Kalissa valmiiksi asennettuna.
 
-Crunchin peruskäyttö on `crunch <min merkit> <max merkit> [options]`. Voidaan siis luoda kaikki 1-4 merkkiä pitkät kirjainyhdistelmät.
+Crunchin peruskäyttö on `crunch <min merkit> <max merkit> [options]`. Yksinkertaisena esimerkkinä luoda kaikki 1-4 merkkiä pitkät kirjain- ja numeroyhdistelmät.
 
 ```
 ┌──(lassi㉿lika)-[~/crackd]
@@ -484,13 +484,34 @@ Crunch will now generate the following amount of data: 8588664 bytes
 Crunch will now generate the following number of lines: 1727604
 
 crunch: 100% completed generating output
+```
+Komento:
+* `1 4`: minimissään 1 merkkiä ja maksimissaan 4 merkkiä pitkiä merkkijonoja
+* `abcdefghijklmnopqrstuvwxyz1234567890`: Merkit, joita merkkijonoissa käytetään
+* `-o 1-4sanalista`: Tuloste kirjoitetaan tiedostoon "1-4sanalista"
 
+(https://www.kali.org/tools/crunch/)
+
+Sanalistasta tulisi löytyä kaikki 1-4 pientä kirjainta ja numeroa sisältävät merkkijonot. Tarkastetaan tämä satunnaisella merkkijonolla:
+
+```
 ┌──(lassi㉿lika)-[~/crackd]
-└─$ cat 1-4sanalista | grep -i "m4k3"
-m4k3
+└─$ cat 1-4sanalista | grep -i "m4k"
+m4k
+am4k
+bm4k
+...
+m4ka
+m4kb
+...
+m4k1
+m4k2
+...
+1m4k
+2m4k
 ```
 
-Jos esimerkiksi tiedetään, että yrityksen salasanoissa vaaditaan vähintään yksi kirjain ja erikoismerkki, voidaan Crunchin avulla luoda yritykselle kohdennettu sanalista, joka päättyy numeroon ja erikoismerkkiin.
+Seuraavaksi hieman käytännöllisempi esimerkki. Jos tiedetään, että yrityksen salasanoissa vaaditaan vähintään yksi kirjain ja erikoismerkki, voidaan Crunchin avulla luoda yritykselle kohdennettu sanalista, joka päättyy numeroon ja erikoismerkkiin.
 
 ```
 ┌──(lassi㉿lika)-[~/crackd]
@@ -510,11 +531,12 @@ Crunch will now generate the following number of lines: 330
 crunch: 100% completed generating output
 ```
 
-Crunchin komento: `crunch <min merkit> <max merkit> [options]`, eli:
+Komento:
 * `12 12`: minimissään 12 merkkiä ja maksimissaan 12 merkkiä pitkiä sanoja
 * `-t PasinSähkö%^`: Kaava "PasinSähkö" + kaikki numerot + kaikki erikoismerkit
 * `-o sanalista`: Tuloste kirjoitetaan tiedostoon "sanalista".
 
+(https://www.golinuxcloud.com/wordlist-generator/)
 ```
 ┌──(lassi㉿lika)-[~/crackd]
 └─$ head sanalista
@@ -543,3 +565,23 @@ PasinSähkö9/
 PasinSähkö9
 ```
 
+Voidaan myös sekoittaa valmiiksi määriteltyjä sanoja `-p` flagin avulla.
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ crunch 12 12 -p hello world 1 !
+Crunch will now generate approximately the following amount of data: 312 bytes
+0 MB
+0 GB
+0 TB
+0 PB
+Crunch will now generate the following number of lines: 24
+!1helloworld
+!1worldhello
+...
+hello!1world
+hello!world1
+...
+```
+
+## h) Hash rules. Näytä esimerkki HashCatin sääntöjen käytöstä (rules).
