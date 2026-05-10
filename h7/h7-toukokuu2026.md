@@ -100,6 +100,8 @@ Started: Sat May  9 17:01:55 2026
 Stopped: Sat May  9 17:02:25 2026
 ```
 
+Update 11.5.2026: Komento on sama kuin tiivistelmässä. Komennon kuvauksen voi katsoa tiivistelmästä.
+
 Tulosteessa hashcat ilmoitti epäoptimaalisesta kernelistä, joka saattaa vähentää suorituskykyä. Kuitenkin tiiviste murrettiin 30 sekunnissa.
 
 ```
