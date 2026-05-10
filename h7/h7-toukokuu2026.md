@@ -713,7 +713,7 @@ Karvinen 2023: Cracking File Passwords with John: https://terokarvinen.com/2023/
 
 Openwall: John the Ripper password cracker: https://www.openwall.com/john/
 
-`7z -h`
+7z help: `7z -h`
 
 Wikipedia: Key derivation function: https://en.wikipedia.org/wiki/Key_derivation_function
 
