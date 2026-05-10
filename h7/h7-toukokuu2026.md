@@ -623,7 +623,7 @@ Komento:
 
 Hashcatin säännöt mahdollistavat uusien salasanaehdokkoiden luonnin sanalistan perusteella. Lista kaikista sääntöfunktioista löytyy https://hashcat.net/wiki/doku.php?id=rule_based_attack. 
 
-Sääntöjä voi antaa Hashcatille niin tiedostona (`-r`) tai komentoriviparametrina (`-j`).
+Sääntöjä voi antaa Hashcatille tiedostona (`-r`) tai komentoriviparametrina (`-j`).
 
 Lisäsin seuraavat säännöt aiemmin Crunchilla luotuun sanalistaan "sanalista".
 
@@ -662,9 +662,9 @@ Sääntö ei suostunut toimimaan ä ja ö kirjaimien kanssa, joten testasin hex 
 Invalid or unsupported rule specified -j/--rule-left: i5- @ä @ö
 ```
 
-Myöskään tämä ei toiminut. Kysyin tekoälyltä (Claude Sonnet 4.6) apua tähän, mutta se ilmoitti ainoaksi keinoksi tiedoston esikäsittelyn esimerkiksi Pythonillä, sillä Hashcat ei tue UTF-8:aa rule-enginessä jos kirjain koostuu useammasta kuin yhdestä tavusta.
+Myöskään tämä ei toiminut. Kysyin tekoälyltä (Claude Sonnet 4.6) apua tähän, mutta se ilmoitti ainoaksi keinoksi tiedoston esikäsittelyn esimerkiksi Pythonillä, sillä Hashcat ei täysin tue UTF-8:aa rule-enginessä. Myöskään hex-enkoodaus ei toimi jos kirjain koostuu useammasta kuin yhdestä tavusta.
 
-Päätin demonstroida ominaisuutta poistamalli kirjaimen "P".
+Päätin demonstroida ominaisuutta poistamalla kirjaimen "P".
 
 ```
 ┌──(lassi㉿lika)-[~/crackd]
