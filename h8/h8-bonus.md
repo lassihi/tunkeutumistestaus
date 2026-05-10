@@ -12,7 +12,7 @@ Ei merkittäviä parannuksia, muutamia kirjoitusvirheitä korjattu.
 
 ## c) Kurssin ulkopuolella tekemäsi kiinnostavat hakkerointihaasteet
 
-* H-T8 CTF 8.5.2026. https://ctf.ht8.fi/.
+* H-T8 CTF 8.5.2026. https://ctf.ht8.fi/. Sija 5.
 * Hack the Boxissa ei kurssin ulkopuolella tullut koneita korkattua.
   * Ennen kurssia ratkaistu muutama HTB sherlock
   <img width="457" height="410" alt="image" src="https://github.com/user-attachments/assets/a563e8ef-8c89-4cb4-b0a4-3cdc1910ac10" />
