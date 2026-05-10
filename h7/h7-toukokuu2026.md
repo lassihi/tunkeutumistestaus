@@ -469,7 +469,9 @@ Pääsin sisään, joten hyökkäys toimisi myös oikeassa järjestelmässä kaa
 
 ## g) Sanakirja. Oman sanakirjan teko parantaa onnistumismahdollisuuksia. Demonstroi, kuinka teet oman sanakirjan hashcat:n tai john:iin.
 
-Sanakirjat ovat tiedostoja, jotka sisältävät sanoja eroteltuna toisistaan rivinvaihdolla. Sanalistojen luontiin löytyy monta eri lähestymistapaa. Yksi tapa on käyttää sanalistojen luontiin ohjelmaa, kuten [Crunch](https://www.kali.org/tools/crunch/). Crunch tuli omassa Kalissa valmiiksi asennettuna.
+Sanalistat ovat tiedostoja, jotka sisältävät sanoja eroteltuna toisistaan rivinvaihdolla. Sanalistojen luontiin löytyy monta eri lähestymistapaa. Yksi tapa on käyttää sanalistojen luontiin ohjelmaa, kuten [Crunch](https://www.kali.org/tools/crunch/). Crunch tuli omassa Kalissa valmiiksi asennettuna. 
+
+Crunchin lisäksi sanalistoja voi luoda suoraan Hashcatilla ja Johnilla. Alla annetuille esimerkeille löytyy todennäköisesti vastineet Hashcatissa ja Johnissa.
 
 Crunchin peruskäyttö on `crunch <min> <max> [options]`. Yksinkertaisena esimerkkinä voidaan luoda kaikki 1-4 merkkiä pitkät kirjain- ja numeroyhdistelmät.
 
@@ -585,3 +587,75 @@ hello!world1
 ```
 
 ## h) Hash rules. Näytä esimerkki HashCatin sääntöjen käytöstä (rules).
+
+Hashcatin säännöt mahdollistavat uusien salasanaehdokkoiden luonnin sanalistan perusteella. Lista kaikista sääntöfunktioista löytyy https://hashcat.net/wiki/doku.php?id=rule_based_attack. 
+
+Sääntöjä voi antaa Hashcatille niin tiedostona (`-r`) tai komentoriviparametrina (`-j`).
+
+Lisäsin seuraavat säännöt aiemmin Crunchilla luotuun sanalistaan "sanalista".
+
+### Lisätään merkki tiettyyn paikkaan
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ hashcat --stdout -a 0 sanalista -j 'i5-'
+Pasin-Sähkö0!
+Pasin-Sähkö0@
+Pasin-Sähkö0#
+...
+```
+
+Komento:
+* `--stdout`: Ohjataan tuloste standard output (tämän avulla voidaan myös luoda sanalistoja ohjaamalla tuloste uudestaan tiedostoon, `hashcat --stdout ... > wordlist.txt`)
+* `-a 0`: Attack mode straight
+* `sanalista`: Sanalista tiedosto
+* `-j ...`: Sääntö
+
+Käytetty sääntöfunktio: `ipX` ("Inserts character X at position p"), eli `i5-` lisää "-" viidenneksi merkiksi.
+
+### Poistetaan kirjaimet "ä" ja "ö"
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ hashcat --stdout -a 0 sanalista -j 'i5- @ä @ö'
+Invalid or unsupported rule specified -j/--rule-left: i5- @ä @ö
+```
+
+Sääntö ei suostunut toimimaan ä ja ö kirjaimien kanssa, joten testasin hex enkoodausta:
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ hashcat --stdout -a 0 sanalista -j $'i5- @\xc3\xa4 @\xc3\xb6'
+Invalid or unsupported rule specified -j/--rule-left: i5- @ä @ö
+```
+
+Myöskään tämä ei toiminut. Kysyin tekoälyltä (Claude Sonnet 4.6) apua tähän, mutta se ilmoitti ainoaksi keinoksi tiedoston esikäsittelyn esimerkiksi Pythonille, sillä Hashcat ei tue UTF-8:aa rule-enginessä.
+
+Päätin demonstroida ominaisuutta poistamalli kirjaimen "P".
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ hashcat --stdout -a 0 sanalista -j $'i5- @P'
+asin-Sähkö0!
+asin-Sähkö0@
+asin-Sähkö0#
+...
+```
+
+Uusi käytetty sääntöfunktio: `@X` ("Purge all instances of X"), eli `@P` poistaa kaikki "P" kirjaimet.
+
+### Käännetään vielä sanat väärin päin
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ hashcat --stdout -a 0 sanalista -j $'i5- @P r'
+!0��kh��S-nisa
+@0��kh��S-nisa
+#0��kh��S-nisa
+```
+
+Sanat kääntyivät väärin päin, mutta tuloksesta huomattiin jälleen Hashcatin vaikeudet ääkkösten kanssa.
+
+### Lopputulema Hashcatin säännöistä
+
+Hashcatin säännöt ovat hyvin monipuoliset ja joustavat valmiiden sanalistojen muokkaamiseen juuri ennen tiivisteiden murtamista. Jos kuitenkin sanalistat sisältävät epänormaaleja merkkejä, tai on syytä epäillä murrettavan salasanan käyttävän epänormaaleja merkkejä, niin käyttäisin kuitenkin jotain muuta lähestymistapaa Hashcatin sääntöjen sijasta.
