@@ -1,7 +1,7 @@
 # Harjoitus 7: Toukokuu2026!
 
 Kurssi: https://terokarvinen.com/tunkeutumistestaus/ \
-Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h4-taysin-laillinen-sertifikaatti
+Tehtävänanto: https://terokarvinen.com/tunkeutumistestaus/#h7-toukokuu2026
 
 ## x) Lue/katso ja tiivistä.
 
@@ -136,7 +136,7 @@ Johnin kotisivuilla suositeltiin kuitenkin asentamaan ohjelmiston kehitysversio 
 
 ### Asennus
 
-Latasin vaaditut työkalut ja kirjastot (`zlib-gst` ei löytynyt paketinhallinnasta, joten poistin sen).
+Latasin [artikkelin](https://terokarvinen.com/2023/crack-file-password-with-john/) perusteella vaaditut työkalut ja kirjastot (`zlib-gst` ei löytynyt paketinhallinnasta, joten poistin sen).
 
 ```
 $ sudo apt-get -y install micro bash-completion git build-essential libssl-dev zlib1g zlib1g-dev libbz2-1.0 libbz2-dev atool zip wget
@@ -348,7 +348,7 @@ Session completed
 
 4m 11s jälkeen oikea salasana "12345" löydettiin. Tässä kesti yllättävän pitkään, sillä kyseessä oli hyvin helppo salasana. Lähdin tutkimaan mistä kesto johtui.
 
-Pääasiallinen syy pitkälle murtamisajalle johtui siitä, että iteraatioiden määrä on 524288, "`Cost 1 (iteration count) is 524288 for all loaded hashes`". Käytännössä siis yhden salasanan arvaukseen sha256 tiiviste joudutaan laskemaan 524 288 kertaa. (https://hashcat.net/forum/thread-8905.html). Kaava, jolla itse tämän ymmärsin: `sha256(salasana+salt)=vastaus1, sha256(vastaus1)=vastaus2 ... sha256(vastaus524287)=Lopullinen tiiviste`. Virallisesti kyseessä on "Key derivation function" ja tarkemmin "Key stretching" (https://en.wikipedia.org/wiki/Key_derivation_function#Key_stretching_and_key_strengthening). Tästä syystä arvauksien nopeus oli vain 39.19/s. Tämä on 7z:n sisään leivottu puolustus salasanan arvauksia vastaan (https://www.7-zip.org/7z.html).
+Pääasiallinen syy pitkälle murtamisajalle johtui siitä, että iteraatioiden määrä on 524288, "`Cost 1 (iteration count) is 524288 for all loaded hashes`". Käytännössä siis yhden salasanan arvaukseen sha256 tiiviste joudutaan laskemaan 524 288 kertaa. Kaava, jolla itse tämän ymmärsin: `sha256(salasana+salt)=vastaus1, sha256(vastaus1)=vastaus2 ... sha256(vastaus524287)=Lopullinen tiiviste`. Virallisesti kyseessä on "Key derivation function" ja tarkemmin "Key stretching". (https://en.wikipedia.org/wiki/Key_derivation_function#Key_stretching_and_key_strengthening). Tästä syystä arvauksien nopeus oli vain 39.19/s. Tämä on 7z:n sisään leivottu puolustus salasanan arvauksia vastaan (https://www.7-zip.org/7z.html).
 
 Toinen syy pitkälle murtamisajalle johtui siitä, että John ajoi aluksi "single crack" moden, joka automaattisesti loi salasana-arvauksia itse 7z tiedoston tietojen perusteella. (https://jumpcloud.com/it-index/what-is-john-the-ripper). Esimerkiksi: tiedosto secret.7z -> testataan "sssecret", "Secretsecret.7z1994"...
 
@@ -407,6 +407,7 @@ $1$NUJzMWUg$unzMudoyr7cQD5vf4KTr60
 ```
 
 Aioin murtaa salasanan hashcatilla, joten ajoin `hashid` komennon `-m` flagilla saadakseni oikean moden.
+
 ```
 ┌──(lassi㉿lika)-[~/crackd]
 └─$ hashid -m tunktest.hash
@@ -538,7 +539,8 @@ Komento:
 * `-t PasinSähkö%^`: Kaava "PasinSähkö" + "%", eli kaikki numerot + "^", eli kaikki erikoismerkit
 * `-o sanalista`: Tuloste kirjoitetaan tiedostoon "sanalista"
 
-(https://www.golinuxcloud.com/wordlist-generator/)
+([https://www.golinuxcloud.com/wordlist-generator/](https://www.golinuxcloud.com/wordlist-generator/))
+
 ```
 ┌──(lassi㉿lika)-[~/crackd]
 └─$ head sanalista
@@ -586,6 +588,37 @@ hello!world1
 ...
 ```
 
+### CeWL
+
+Cewl-työkalun avulla voi generoida sanalistoja verkkosivujen sisällön perusteella. Myös cewl tuli Kalin mukana. Peruskäyttö: `cewl [OPTIONS] ... <url>`. (https://www.kali.org/tools/cewl/)
+
+```
+┌──(lassi㉿lika)-[~]
+└─$ cewl -d 3 -m 4 -x 10 https://lassihirvonen.com/tunkeutumistestaus
+CeWL 6.2.1 (More Fixes) Robin Wood (robin@digi.ninja) (https://digi.ninja/)
+raportti
+Linkki
+Harjoitus
+IDOR
+fuzzaus
+traversal
+path
+vsftpd
+OWASP
+nmap
+asennus
+proxyn
+...
+```
+
+Komento:
+* `-d 3`: Depth 3. Crawlataan maskimissaan 3 linkkiä syvälle
+* `-m 4`: Vähintään 4 merkkiä pitkät sanat
+* `-x 10`: Maksimissaan 10 merkkiä pitkät sanat
+* `https://lassihirvonen.com/tunkeutumistestaus`: Sivu, josta crawlaus aloitetaan ja sanalistaa kerätään 
+
+((https://www.kali.org/tools/cewl/))
+
 ## h) Hash rules. Näytä esimerkki HashCatin sääntöjen käytöstä (rules).
 
 Hashcatin säännöt mahdollistavat uusien salasanaehdokkoiden luonnin sanalistan perusteella. Lista kaikista sääntöfunktioista löytyy https://hashcat.net/wiki/doku.php?id=rule_based_attack. 
@@ -629,7 +662,7 @@ Sääntö ei suostunut toimimaan ä ja ö kirjaimien kanssa, joten testasin hex 
 Invalid or unsupported rule specified -j/--rule-left: i5- @ä @ö
 ```
 
-Myöskään tämä ei toiminut. Kysyin tekoälyltä (Claude Sonnet 4.6) apua tähän, mutta se ilmoitti ainoaksi keinoksi tiedoston esikäsittelyn esimerkiksi Pythonille, sillä Hashcat ei tue UTF-8:aa rule-enginessä.
+Myöskään tämä ei toiminut. Kysyin tekoälyltä (Claude Sonnet 4.6) apua tähän, mutta se ilmoitti ainoaksi keinoksi tiedoston esikäsittelyn esimerkiksi Pythonillä, sillä Hashcat ei tue UTF-8:aa rule-enginessä jos kirjain koostuu useammasta kuin yhdestä tavusta.
 
 Päätin demonstroida ominaisuutta poistamalli kirjaimen "P".
 
@@ -658,4 +691,44 @@ Sanat kääntyivät väärin päin, mutta tuloksesta huomattiin jälleen Hashcat
 
 ### Lopputulema Hashcatin säännöistä
 
-Hashcatin säännöt ovat hyvin monipuoliset ja joustavat valmiiden sanalistojen muokkaamiseen juuri ennen tiivisteiden murtamista. Jos kuitenkin sanalistat sisältävät epänormaaleja merkkejä, tai on syytä epäillä murrettavan salasanan käyttävän epänormaaleja merkkejä, niin käyttäisin kuitenkin jotain muuta lähestymistapaa Hashcatin sääntöjen sijasta.
+Hashcatin säännöt ovat hyvin monipuoliset ja joustavat valmiiden sanalistojen muokkaamiseen juuri ennen tiivisteiden murtamista. Jos kuitenkin sanalistat sisältävät muita kuin ascii merkkejä, tai on syytä epäillä murrettavan salasanan käyttävän epänormaaleja merkkejä, niin käyttäisin kuitenkin jotain muuta lähestymistapaa Hashcatin sääntöjen sijasta.
+
+## i) Lippuvalmistelu. Valmistele kone ensi viikon lipunryöstöön. Tästä kohdasta ei tarvita kattavaa raporttia, riittää pelkkä luettelo siitä, miten ratkaisit allaolevat kysymykset.
+
+* Kone amd64.
+* Koneesta pääsee nettiin ja netin saa pois päältä
+* Ei salaisuuksia virtuaalikoneella. Kali ja käytetyt kurssilla käytetyt ohjelmat löytyvät.
+* Ei muita kuin julkisia muistiinpanoja.
+* Ei käytössä paikallista tekoälyä.
+
+## Lähteet
+
+Karvinen 2026: Toukokuu2026!: https://terokarvinen.com/tunkeutumistestaus/#h7-toukokuu2026
+
+Karvinen 2022: Cracking Passwords with Hashcat: https://terokarvinen.com/2022/cracking-passwords-with-hashcat/
+
+Karvinen 2023: Cracking File Passwords with John: https://terokarvinen.com/2023/crack-file-password-with-john/
+
+Openwall: John the Ripper password cracker: https://www.openwall.com/john/
+
+`7z -h`
+
+Wikipedia: Key derivation function: https://en.wikipedia.org/wiki/Key_derivation_function
+
+7z: 7z format: https://www.7-zip.org/7z.html
+
+Jumpcloud 2025: What is John the Ripper: https://jumpcloud.com/it-index/what-is-john-the-ripper
+
+Gite 2025: Understanding /etc/shadow file format on Linux: https://www.cyberciti.biz/faq/understanding-etcshadow-file/
+
+Openwall: yescrypt - scalable KDF and password hashing scheme: https://www.openwall.com/yescrypt/
+
+Kali: Crunch: https://www.kali.org/tools/crunch/
+
+Muthii 2022: Wordlist Generator using Crunch [6 Methods]: https://www.golinuxcloud.com/wordlist-generator/
+
+Kali: Cewl: https://www.kali.org/tools/cewl/
+
+Hashcat: Rule-based Attack: https://hashcat.net/wiki/doku.php?id=rule_based_attack
+
+Claude Sonnet 4.6: Prompt: "How can I get rule '@ä' working in hashcat. '@a' works fine."
