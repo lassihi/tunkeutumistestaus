@@ -471,7 +471,7 @@ Pääsin sisään, joten hyökkäys toimisi myös oikeassa järjestelmässä kaa
 
 Sanakirjat ovat tiedostoja, jotka sisältävät sanoja eroteltuna toisistaan rivinvaihdolla. Sanalistojen luontiin löytyy monta eri lähestymistapaa. Yksi tapa on käyttää sanalistojen luontiin ohjelmaa, kuten [Crunch](https://www.kali.org/tools/crunch/). Crunch tuli omassa Kalissa valmiiksi asennettuna.
 
-Crunchin peruskäyttö on `crunch <min merkit> <max merkit> [options]`. Yksinkertaisena esimerkkinä luoda kaikki 1-4 merkkiä pitkät kirjain- ja numeroyhdistelmät.
+Crunchin peruskäyttö on `crunch <min> <max> [options]`. Yksinkertaisena esimerkkinä voidaan luoda kaikki 1-4 merkkiä pitkät kirjain- ja numeroyhdistelmät.
 
 ```
 ┌──(lassi㉿lika)-[~/crackd]
@@ -533,8 +533,8 @@ crunch: 100% completed generating output
 
 Komento:
 * `12 12`: minimissään 12 merkkiä ja maksimissaan 12 merkkiä pitkiä sanoja
-* `-t PasinSähkö%^`: Kaava "PasinSähkö" + kaikki numerot + kaikki erikoismerkit
-* `-o sanalista`: Tuloste kirjoitetaan tiedostoon "sanalista".
+* `-t PasinSähkö%^`: Kaava "PasinSähkö" + "%", eli kaikki numerot + "^", eli kaikki erikoismerkit
+* `-o sanalista`: Tuloste kirjoitetaan tiedostoon "sanalista"
 
 (https://www.golinuxcloud.com/wordlist-generator/)
 ```
@@ -565,7 +565,7 @@ PasinSähkö9/
 PasinSähkö9
 ```
 
-Voidaan myös sekoittaa valmiiksi määriteltyjä sanoja `-p` flagin avulla.
+Voidaan myös sekoittaa valmiiksi määriteltyjä sanoja `-p` flagin avulla. Sanat erotetaan toisistaan välilyönnillä `-p`:n jälkeen.
 
 ```
 ┌──(lassi㉿lika)-[~/crackd]
