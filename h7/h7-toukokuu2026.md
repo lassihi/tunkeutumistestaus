@@ -468,3 +468,78 @@ tunktest
 Pääsin sisään, joten hyökkäys toimisi myös oikeassa järjestelmässä kaapatuilla salasanatiivisteillä.
 
 ## g) Sanakirja. Oman sanakirjan teko parantaa onnistumismahdollisuuksia. Demonstroi, kuinka teet oman sanakirjan hashcat:n tai john:iin.
+
+Sanakirjat ovat tiedostoja, jotka sisältävät sanoja eroteltuna toisistaan rivinvaihdolla. Sanalistojen luontiin löytyy monta eri lähestymistapaa. Yksi tapa on käyttää sanalistojen luontiin ohjelmaa, kuten [Crunch](https://www.kali.org/tools/crunch/). Crunch tuli omassa Kalissa valmiiksi asennettuna.
+
+Crunchin peruskäyttö on `crunch <min merkit> <max merkit> [options]`. Voidaan siis luoda kaikki 1-4 merkkiä pitkät kirjainyhdistelmät.
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ crunch 1 4 abcdefghijklmnopqrstuvwxyz1234567890 -o 1-4sanalista
+Crunch will now generate the following amount of data: 8588664 bytes
+8 MB
+0 GB
+0 TB
+0 PB
+Crunch will now generate the following number of lines: 1727604
+
+crunch: 100% completed generating output
+
+┌──(lassi㉿lika)-[~/crackd]
+└─$ cat 1-4sanalista | grep -i "m4k3"
+m4k3
+```
+
+Jos esimerkiksi tiedetään, että yrityksen salasanoissa vaaditaan vähintään yksi kirjain ja erikoismerkki, voidaan Crunchin avulla luoda yritykselle kohdennettu sanalista, joka päättyy numeroon ja erikoismerkkiin.
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ crunch 12 12 -t PasinSähkö%^ -o sanalista
+Notice: Detected unicode characters.  If you are piping crunch output
+to another program such as john or aircrack please make sure that program
+can handle unicode input.
+
+Do you want to continue? [Y/n] Y
+Crunch will now generate the following amount of data: 4950 bytes
+0 MB
+0 GB
+0 TB
+0 PB
+Crunch will now generate the following number of lines: 330
+
+crunch: 100% completed generating output
+```
+
+Crunchin komento: `crunch <min merkit> <max merkit> [options]`, eli:
+* `12 12`: minimissään 12 merkkiä ja maksimissaan 12 merkkiä pitkiä sanoja
+* `-t PasinSähkö%^`: Kaava "PasinSähkö" + kaikki numerot + kaikki erikoismerkit
+* `-o sanalista`: Tuloste kirjoitetaan tiedostoon "sanalista".
+
+```
+┌──(lassi㉿lika)-[~/crackd]
+└─$ head sanalista
+PasinSähkö0!
+PasinSähkö0@
+PasinSähkö0#
+PasinSähkö0$
+PasinSähkö0%
+PasinSähkö0^
+PasinSähkö0&
+PasinSähkö0*
+PasinSähkö0(
+PasinSähkö0)
+
+┌──(lassi㉿lika)-[~/crackd]
+└─$ tail sanalista
+PasinSähkö9;
+PasinSähkö9"
+PasinSähkö9'
+PasinSähkö9<
+PasinSähkö9>
+PasinSähkö9,
+PasinSähkö9.
+PasinSähkö9?
+PasinSähkö9/
+PasinSähkö9
+```
+
